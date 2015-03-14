@@ -1,0 +1,15 @@
+extends ./layout.jade
+
+block content
+	.container
+		if error && error.length
+			.alert.alert-danger= error
+		form(action="/login" method="post")
+			.form-group
+				label(for="username") Username
+				input.form-control(type="text" id="username" name="username")
+			.form-group
+				label(for="password") Password
+				input.form-control(type="password" id="password" name="password")
+			input.btn.btn-default(type="submit" value="Sign in")
+
