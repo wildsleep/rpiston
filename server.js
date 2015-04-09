@@ -78,9 +78,9 @@ app.post('/logout', function (req, res) {
 	res.redirect('/');
 });
 
-app.get('/control', verifyAuthenticated,
+app.get('/:page', verifyAuthenticated,
 	function (req, res) {
-		res.render('control');
+		res.render(req.params.page);
 	});
 
 var server = app.listen(3000, function () {
