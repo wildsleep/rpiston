@@ -1,50 +1,67 @@
 var bootstrap = require('react-bootstrap');
 var chroma = require('chroma-js');
+var io = require('socket.io-client');
 var React = require('react');
-var socket = require('socket.io-client')();
+var Reflux = require('reflux');
 
-/*
-var motorValue = 0;
+var Actions = Reflux.createActions([
+	'setMotor',
+	'decreaseMotor',
+	'increaseMotor'
+]);
 
-$('.io-motor-off').click(function () {
-	socket.emit('set-motor', 0);
+var motorStore = Reflux.createStore({
+	listenables: Actions,
+
+	init() {
+		this.value = 0;
+		this.increment = 0.05;
+
+		this.socket = io();
+		this.socket.on('motor', this.updateValue.bind(this));
+	},
+
+	updateValue(value) {
+		this.value = value;
+		this.trigger(this.value);
+	},
+
+	onSetMotor(value) {
+		this.socket.emit('set-motor', value);
+	},
+
+	onDecreaseMotor() {
+		this.socket.emit('set-motor', Math.max(0, this.value - this.increment));
+	},
+
+	onIncreaseMotor() {
+		this.socket.emit('set-motor', Math.min(1, this.value + this.increment));
+	}
 });
-
-$('.io-motor-n').click(function () {
-	var n = parseFloat($(this).data('n'));
-	socket.emit('set-motor', n);
-});
-
-$('.io-motor-down').click(function () {
-	socket.emit('set-motor', Math.max(0, motorValue - 0.05));
-});
-
-$('.io-motor-up').click(function () {
-	socket.emit('set-motor', Math.min(1, motorValue + 0.05));
-});
-
-socket.on('motor', function (value) {
-	motorValue = value;
-	$('.io-motor-display').css({
-		'width': (100 * value) + '%',
-		'background-color': barColor(value)
-	});
-});
-
-*/
 
 var MotorBar = React.createClass({
-	propTypes: {
-		motorValue: React.PropTypes.number.isRequired
-	},
+	mixins: [Reflux.listenTo(motorStore, 'onMotorChange')],
+
 	render() {
 		return (
 			<div className='row'>
 				<div className='col-xs-12'>
-					<bootstrap.ProgressBar active now={this.props.motorValue} />
+					<bootstrap.ProgressBar active min={0} max={1} now={this.state.motorValue} />
 				</div>
 			</div>
 		);
+	},
+
+	getInitialState() {
+		return {
+			motorValue: 0
+		};
+	},
+
+	onMotorChange(value) {
+		this.setState({
+			motorValue: value
+		});
 	}
 });
 
@@ -53,6 +70,7 @@ var MotorControlNumberButton = React.createClass({
 		value: React.PropTypes.number.isRequired,
 		maxValue: React.PropTypes.number.isRequired
 	},
+
 	render() {
 		return (
 			<bootstrap.ButtonGroup>
@@ -62,8 +80,9 @@ var MotorControlNumberButton = React.createClass({
 			</bootstrap.ButtonGroup>
 		);
 	},
+
 	handleClick() {
-		console.log('Clicked button ' + this.props.value + '/' + this.props.maxValue);
+		Actions.setMotor(this.props.value / this.props.maxValue);
 	}
 });
 
@@ -100,11 +119,13 @@ var MotorControlRelativeButtons = React.createClass({
 			</div>
 		);
 	},
+
 	handleDecrease() {
-		console.log('Clicked button <');
+		Actions.decreaseMotor();
 	},
+
 	handleIncrease() {
-		console.log('Clicked button >');
+		Actions.increaseMotor();
 	}
 });
 
@@ -121,13 +142,13 @@ var MotorControlOffButton = React.createClass({
 		);
 	},
 	handleClick() {
-		console.log('Clicked button OFF');
+		Actions.setMotor(0);
 	}
 });
 
 React.render(
 	<div className='container'>
-		<MotorBar motorValue={12} />
+		<MotorBar />
 		<MotorControlNumberButtons />
 		<MotorControlRelativeButtons />
 		<MotorControlOffButton />
