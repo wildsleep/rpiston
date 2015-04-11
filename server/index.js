@@ -46,17 +46,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-app.get('/scripts/chroma.min.js', function (req, res) {
-	var file = require.resolve('chroma-js');
-	var minFile = file.replace(/\.js$/, '.min.js');
-	res.sendFile(minFile);
-});
-app.use('/scripts', express.static(path.join(__dirname, '../public/scripts')));
-app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
-
 function verifyAuthenticated(req, res, next) {
 	if (!req.isAuthenticated()) {
-		res.redirect('/login');
+		res.redirect('/sign-in');
 	} else {
 		next();
 	}
@@ -66,20 +58,22 @@ app.get('/', verifyAuthenticated, function (req, res) {
 	res.render('app');
 });
 
-app.get('/login', function (req, res) {
-	res.render('auth', { error: req.flash('error') });
+app.get('/sign-in', function (req, res) {
+	res.render('sign-in', { error: req.flash('error') });
 });
 
-app.post('/login', passport.authenticate('local', {
+app.post('/sign-in', passport.authenticate('local', {
 	successRedirect: '/',
-	failureRedirect: '/login',
+	failureRedirect: '/sign-in',
 	failureFlash: true
 }));
 
-app.post('/logout', function (req, res) {
+app.post('/sign-out', function (req, res) {
 	req.logout();
-	res.redirect('/login');
+	res.redirect('/sign-in');
 });
+
+app.use('/', express.static(path.join(__dirname, '../public')));
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;

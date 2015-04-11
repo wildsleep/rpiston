@@ -1,10 +1,13 @@
 extends ./layout.jade
 
 block content
+	nav.navbar.navbar-default: .container
+		.navbar-header
+			a.navbar-brand(href='/') rPiston
 	.container
 		if error && error.length
 			.alert.alert-danger= error
-		form(action="/login" method="post")
+		form(method="post")
 			.form-group
 				label(for="username") Username
 				input.form-control(type="text" id="username" name="username")

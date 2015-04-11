@@ -8,9 +8,12 @@ html(lang="en")
 			@media (min-width: 768px) {
 				.container { width: 750px; }
 			}
+			.navbar-header {
+				float: left;
+			}
+			.navbar-non-collapse {
+				float: right;
+			}
 	body
-		nav.navbar.navbar-default: .container
-			.navbar-header
-				a.navbar-brand(href='/') rPiston
 		block content
 		block scripts
