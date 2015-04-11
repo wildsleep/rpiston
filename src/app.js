@@ -1,4 +1,5 @@
-var socket = io();
+var socket = require('socket.io-client')();
+var chroma = require('chroma-js');
 
 var motorValue = 0;
 
@@ -35,4 +36,3 @@ function barColor(value) {
 	value = (value - 0.5) * 2;
 	return chroma.interpolate(zeroColor, oneColor, value, 'lab').hex();
 };
-
