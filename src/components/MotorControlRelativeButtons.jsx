@@ -3,7 +3,7 @@ var React = require('react');
 
 var Actions = require('../actions');
 
-module.exports = React.createClass({
+var MotorControlRelativeButtons = React.createClass({
 	render() {
 		return (
 			<bootstrap.Row>
@@ -29,3 +29,5 @@ module.exports = React.createClass({
 		Actions.increaseMotor();
 	}
 });
+
+module.exports = MotorControlRelativeButtons;

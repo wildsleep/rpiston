@@ -3,7 +3,7 @@ var React = require('react');
 
 var MotorControlNumberButton = require('./MotorControlNumberButton');
 
-module.exports = React.createClass({
+var MotorControlNumberButtons = React.createClass({
 	render() {
 		return (
 			<bootstrap.Row>
@@ -18,3 +18,5 @@ module.exports = React.createClass({
 		);
 	}
 });
+
+module.exports = MotorControlNumberButtons;

@@ -3,12 +3,12 @@ var chroma = require('chroma-js');
 var React = require('react');
 var Reflux = require('reflux');
 
-var MotorStore = require('../motorStore');
+var motorStore = require('../motorStore');
 
 require('./MotorBar.less');
 
-module.exports = React.createClass({
-	mixins: [Reflux.listenTo(MotorStore, 'onMotorChange')],
+var MotorBar = React.createClass({
+	mixins: [Reflux.listenTo(motorStore, 'onMotorChange')],
 
 	getInitialState() {
 		return {
@@ -28,21 +28,25 @@ module.exports = React.createClass({
 
 	componentDidUpdate() {
 		var progressBarNode = React.findDOMNode(this).querySelector('.progress-bar');
-		progressBarNode.style['backgroundColor'] = barColor(this.state.motorValue);
+		progressBarNode.style['backgroundColor'] = this.barColor();
 	},
 
 	onMotorChange(value) {
 		this.setState({
 			motorValue: value
 		});
+	},
+	
+	barColor() {
+		var value = this.state.motorValue;
+		var zeroColor = '#158cba';
+		var oneColor = '#ff4136';
+		if (value < 0.5)
+			return zeroColor;
+		value = (value - 0.5) * 2;
+		return chroma.interpolate(zeroColor, oneColor, value, 'lab').hex();
 	}
 });
 
-function barColor(value) {
-	var zeroColor = '#158cba';
-	var oneColor = '#ff4136';
-	if (value < 0.5)
-		return zeroColor;
-	value = (value - 0.5) * 2;
-	return chroma.interpolate(zeroColor, oneColor, value, 'lab').hex();
-};
+module.exports = MotorBar;
+

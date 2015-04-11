@@ -2,10 +2,12 @@ var React = require('react');
 
 var ManualMotorControl = require('../components/ManualMotorControl');
 
-module.exports = React.createClass({
+var ControlPage = React.createClass({
 	render() {
 		return (
 			<ManualMotorControl />
 		)
 	}
 });
+
+module.exports = ControlPage;

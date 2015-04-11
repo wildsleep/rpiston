@@ -3,7 +3,7 @@ var React = require('react');
 
 var Actions = require('../actions');
 
-module.exports = React.createClass({
+var MotorControlNumberButton = React.createClass({
 	propTypes: {
 		value: React.PropTypes.number.isRequired,
 		maxValue: React.PropTypes.number.isRequired
@@ -23,3 +23,5 @@ module.exports = React.createClass({
 		Actions.setMotor(this.props.value / this.props.maxValue);
 	}
 });
+
+module.exports = MotorControlNumberButton;

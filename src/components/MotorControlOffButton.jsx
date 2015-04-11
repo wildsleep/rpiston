@@ -3,7 +3,7 @@ var React = require('react');
 
 var Actions = require('../actions');
 
-module.exports = React.createClass({
+var MotorControlOffButton = React.createClass({
 	render() {
 		return (
 			<bootstrap.Row>
@@ -19,3 +19,5 @@ module.exports = React.createClass({
 		Actions.setMotor(0);
 	}
 });
+
+module.exports = MotorControlOffButton;

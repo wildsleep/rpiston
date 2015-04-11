@@ -6,7 +6,7 @@ var MotorControlNumberButtons = require('../components/MotorControlNumberButtons
 var MotorControlRelativeButtons = require('../components/MotorControlRelativeButtons');
 var MotorControlOffButton = require('../components/MotorControlOffButton');
 
-module.exports = React.createClass({
+var ManualMotorControl = React.createClass({
 	render() {
 		return (
 			<div>
@@ -18,3 +18,5 @@ module.exports = React.createClass({
 		)
 	}
 });
+
+module.exports = ManualMotorControl;
