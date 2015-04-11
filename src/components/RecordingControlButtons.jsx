@@ -3,16 +3,10 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var Actions = require('../actions');
-var recordingStore = require('../recordingStore');
 
 var RecordingControlButtons = React.createClass({
-	mixins: [ Reflux.listenTo(recordingStore, 'onRecordingUpdate') ],
-
-	getInitialState() {
-		var recordingData = recordingStore.getDefaultData();
-		return {
-			recordingState: recordingData.recordingState
-		}
+	propTypes: {
+		recordingState: React.PropTypes.string.isRequired
 	},
 
 	handlePlay() {
@@ -30,13 +24,7 @@ var RecordingControlButtons = React.createClass({
 	},
 
 	recordEnabled() {
-		return this.state.recordingState === 'stopped';
-	},
-
-	onRecordingUpdate(recordingData) {
-		this.setState({
-			recordingState: recordingData.recordingState
-		});
+		return this.props.recordingState === 'stopped';
 	},
 
 	render() {

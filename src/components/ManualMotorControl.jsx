@@ -7,10 +7,14 @@ var MotorControlRelativeButtons = require('../components/MotorControlRelativeBut
 var MotorControlOffButton = require('../components/MotorControlOffButton');
 
 var ManualMotorControl = React.createClass({
+	propTypes: {
+		motorValue: React.PropTypes.number.isRequired
+	},
+
 	render() {
 		return (
 			<div>
-				<MotorBar />
+				<MotorBar motorValue={this.props.motorValue} />
 				<MotorControlNumberButtons />
 				<MotorControlRelativeButtons />
 				<MotorControlOffButton />

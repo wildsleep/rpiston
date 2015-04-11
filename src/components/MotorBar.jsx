@@ -8,19 +8,15 @@ var motorStore = require('../motorStore');
 require('./MotorBar.less');
 
 var MotorBar = React.createClass({
-	mixins: [Reflux.listenTo(motorStore, 'onMotorChange')],
-
-	getInitialState() {
-		return {
-			motorValue: 0
-		};
+	propTypes: {
+		motorValue: React.PropTypes.number.isRequired
 	},
 
 	render() {
 		return (
 			<bootstrap.Row>
 				<bootstrap.Col xs={12}>
-					<bootstrap.ProgressBar active min={0} max={1} now={this.state.motorValue} />
+					<bootstrap.ProgressBar active min={0} max={1} now={this.props.motorValue} />
 				</bootstrap.Col>
 			</bootstrap.Row>
 		);
@@ -31,14 +27,8 @@ var MotorBar = React.createClass({
 		progressBarNode.style['backgroundColor'] = this.barColor();
 	},
 
-	onMotorChange(value) {
-		this.setState({
-			motorValue: value
-		});
-	},
-	
 	barColor() {
-		var value = this.state.motorValue;
+		var value = this.props.motorValue;
 		var zeroColor = '#158cba';
 		var oneColor = '#ff4136';
 		if (value < 0.5)

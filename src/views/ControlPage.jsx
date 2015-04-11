@@ -1,11 +1,21 @@
 var React = require('react');
+var Reflux = require('reflux');
 
 var ManualMotorControl = require('../components/ManualMotorControl');
+var motorStore = require('../motorStore');
 
 var ControlPage = React.createClass({
+	mixins: [ Reflux.connect(motorStore, 'motorValue') ],
+
+	getInitialState() {
+		return {
+			motorValue: motorStore.getDefaultData()
+		};
+	},
+
 	render() {
 		return (
-			<ManualMotorControl />
+			<ManualMotorControl motorValue={this.state.motorValue} />
 		)
 	}
 });

@@ -14,6 +14,10 @@ module.exports = Reflux.createStore({
 		this.socket.on('motor', this.updateValue.bind(this));
 	},
 
+	getDefaultData() {
+		return this.value;
+	},
+
 	updateValue(value) {
 		this.value = value;
 		this.trigger(this.value);
