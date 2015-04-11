@@ -1,11 +1,14 @@
-var path = require('path');
+var argv = require('minimist')(process.argv.slice(2));
+var bodyParser = require('body-parser');
 var express = require('express');
-var passport = require('passport');
 var flash = require('connect-flash');
 var glob = require('glob');
-var session = require('express-session');
-var bodyParser = require('body-parser');
 var LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var path = require('path');
+var session = require('express-session');
+
+var assetsPublicPath = argv.publicPath || '/';
 
 console.log('Starting rPiston server...');
 
@@ -16,7 +19,7 @@ app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-	cookie: { maxAge: 60000 },
+	cookie: { maxAge: 30*24*60*60*1000 },
 	resave: false,
 	saveUninitialized: false,
 	secret: 'super secret key'
@@ -72,7 +75,9 @@ app.post('/sign-out', function (req, res) {
 });
 
 app.get('/*', verifyAuthenticated, function (req, res) {
-	res.render('app');
+	res.render('app', {
+		publicPath: assetsPublicPath
+	});
 });
 
 var server = app.listen(3000, function () {

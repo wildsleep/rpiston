@@ -1,2 +1,2 @@
-#!/usr/bin/env node
-require('./server');
+#!/usr/bin/bash
+npm start
