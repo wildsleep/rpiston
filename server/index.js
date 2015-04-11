@@ -56,28 +56,30 @@ app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
 
 function verifyAuthenticated(req, res, next) {
 	if (!req.isAuthenticated()) {
-		res.redirect('/');
+		res.redirect('/login');
 	} else {
 		next();
 	}
 }
 
-app.get('/', function (req, res) {
+app.get('/', verifyAuthenticated, function (req, res) {
+	res.render('app');
+});
+
+app.get('/login', function (req, res) {
 	res.render('auth', { error: req.flash('error') });
 });
 
 app.post('/login', passport.authenticate('local', {
-	successRedirect: '/control',
-	failureRedirect: '/',
+	successRedirect: '/',
+	failureRedirect: '/login',
 	failureFlash: true
 }));
 
 app.post('/logout', function (req, res) {
 	req.logout();
-	res.redirect('/');
+	res.redirect('/login');
 });
-
-app.get('/control', verifyAuthenticated, function (req, res) { res.render('control'); });
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;
