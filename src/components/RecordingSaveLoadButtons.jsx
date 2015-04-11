@@ -3,7 +3,6 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var Actions = require('../actions');
-require('./RecordingSaveLoadButtons.less');
 
 var RecordingSaveLoadButtons = React.createClass({
 	handleSave() {
@@ -22,13 +21,11 @@ var RecordingSaveLoadButtons = React.createClass({
 	render() {
 		return (
 			<bootstrap.Row>
-				<bootstrap.Col xs={6} className='recording-load'>
-					<div className='wrapper'>
-						<input type='file' onChange={this.handleFile} />
-						<bootstrap.Button block onClick={this.handleLoad}>
-							<i className='fa fa-folder-open fa-fw' /> Load
-						</bootstrap.Button>
-					</div>
+				<bootstrap.Col xs={6}>
+					<bootstrap.Button componentClass='label' block>
+						<i className='fa fa-folder-open fa-fw' /> Load
+						<input type='file' onChange={this.handleFile} style={{position: 'fixed', top: '-1000px'}} />
+					</bootstrap.Button>
 				</bootstrap.Col>
 				<bootstrap.Col xs={6}>
 					<bootstrap.Button block bsStyle='primary' onClick={this.handleSave}>
