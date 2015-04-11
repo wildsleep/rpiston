@@ -1,18 +1,9 @@
 var React = require('react');
+var Router = require('react-router');
 
-var MotorBar = require('./components/MotorBar');
-var MotorControlNumberButtons = require('./components/MotorControlNumberButtons');
-var MotorControlRelativeButtons = require('./components/MotorControlRelativeButtons');
-var MotorControlOffButton = require('./components/MotorControlOffButton');
-
+var routes = require('./routes');
 require('./main.less');
 
-React.render(
-	<div className='container'>
-		<MotorBar />
-		<MotorControlNumberButtons />
-		<MotorControlRelativeButtons />
-		<MotorControlOffButton />
-	</div>,
-	document.getElementById('app')
-);
+Router.run(routes, Router.HistoryLocation, (Handler) => {
+	React.render(<Handler />, document.getElementById('app'));
+});

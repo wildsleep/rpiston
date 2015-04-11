@@ -11,7 +11,7 @@ console.log('Starting rPiston server...');
 
 var app = express();
 
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, '../templates'));
 app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,9 +54,7 @@ function verifyAuthenticated(req, res, next) {
 	}
 }
 
-app.get('/', verifyAuthenticated, function (req, res) {
-	res.render('app');
-});
+app.use('/', express.static(path.join(__dirname, '../public')));
 
 app.get('/sign-in', function (req, res) {
 	res.render('sign-in', { error: req.flash('error') });
@@ -73,7 +71,9 @@ app.post('/sign-out', function (req, res) {
 	res.redirect('/sign-in');
 });
 
-app.use('/', express.static(path.join(__dirname, '../public')));
+app.get('/*', verifyAuthenticated, function (req, res) {
+	res.render('app');
+});
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;
