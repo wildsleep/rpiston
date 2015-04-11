@@ -9,12 +9,12 @@ module.exports = React.createClass({
 			<bootstrap.Row>
 				<bootstrap.Col xs={6}>
 					<bootstrap.Button block onClick={this.handleDecrease}>
-						&lt;
+						<i className='fa fa-chevron-left' />
 					</bootstrap.Button>
 				</bootstrap.Col>
 				<bootstrap.Col xs={6}>
 					<bootstrap.Button block onClick={this.handleIncrease}>
-						&gt;
+						<i className='fa fa-chevron-right' />
 					</bootstrap.Button>
 				</bootstrap.Col>
 			</bootstrap.Row>
