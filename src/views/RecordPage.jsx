@@ -4,8 +4,8 @@ var Reflux = require('reflux');
 var ManualMotorControl = require('../components/ManualMotorControl');
 var RecordingControlButtons = require('../components/RecordingControlButtons');
 var RecordingLog = require('../components/RecordingLog');
-var motorStore = require('../motorStore');
-var recordingStore = require('../recordingStore');
+var motorStore = require('../stores/motorStore');
+var recordingStore = require('../stores/recordingStore');
 
 var RecordPage = React.createClass({
 	mixins: [

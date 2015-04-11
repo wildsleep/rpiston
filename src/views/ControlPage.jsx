@@ -2,7 +2,7 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var ManualMotorControl = require('../components/ManualMotorControl');
-var motorStore = require('../motorStore');
+var motorStore = require('../stores/motorStore');
 
 var ControlPage = React.createClass({
 	mixins: [ Reflux.connect(motorStore, 'motorValue') ],

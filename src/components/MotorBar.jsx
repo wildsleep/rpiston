@@ -3,8 +3,6 @@ var chroma = require('chroma-js');
 var React = require('react');
 var Reflux = require('reflux');
 
-var motorStore = require('../motorStore');
-
 require('./MotorBar.less');
 
 var MotorBar = React.createClass({
@@ -39,4 +37,3 @@ var MotorBar = React.createClass({
 });
 
 module.exports = MotorBar;
-

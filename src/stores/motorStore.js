@@ -1,7 +1,7 @@
 var io = require('socket.io-client');
 var Reflux = require('reflux');
 
-var Actions = require('./actions');
+var Actions = require('../actions');
 
 module.exports = Reflux.createStore({
 	listenables: Actions,
