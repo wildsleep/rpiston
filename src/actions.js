@@ -6,5 +6,7 @@ module.exports = Reflux.createActions([
 	'increaseMotor',
 	'startRecording',
 	'stopRecording',
-	'playRecording'
+	'playRecording',
+	'saveRecording',
+	'loadRecording'
 ]);

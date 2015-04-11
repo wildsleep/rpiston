@@ -12,7 +12,12 @@ module.exports = function (options) {
 	var loaders = [
 		{ test: /\.js/, include: path.join(__dirname, 'src'), loader: 'babel-loader' },
 		{ test: /\.jsx/, loader: 'babel-loader' },
-		{ test: /\.less/, loaders: ['style-loader', 'css-loader', 'less-loader'] }
+		{ test: /\.less/, loaders: [
+			'style-loader',
+			'css-loader',
+			'autoprefixer-loader?browsers=last 2 version',
+			'less-loader'
+		]}
 	];
 	var extensions = ['', '.js', '.jsx'];
 

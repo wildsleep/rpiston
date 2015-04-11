@@ -2,10 +2,11 @@ var React = require('react');
 var Reflux = require('reflux');
 
 var Actions = require('../actions');
+var Recording = require('../models/Recording');
 
 var RecordingPlayback = React.createClass({
 	propTypes: {
-		recording: React.PropTypes.array.isRequired,
+		recording: React.PropTypes.instanceOf(Recording).isRequired,
 		playbackState: React.PropTypes.string.isRequired
 	},
 
@@ -32,13 +33,13 @@ var RecordingPlayback = React.createClass({
 	},
 
 	queueRecordedEvent() {
-		var nextEvent = this.props.recording.filter((event) => event.time > this.state.lastTime)[0];
-		if (!nextEvent) {
+		var event = this.props.recording.nextEventAfter(this.state.lastTime);
+		if (!event) {
 			Actions.stopRecording();
 			return;
 		}
-		var timeUntilEvent = nextEvent.time - this.state.lastTime;
-		var timeout = setTimeout(() => this.triggerRecordedEvent(nextEvent), timeUntilEvent);
+		var timeUntilEvent = event.time - this.state.lastTime;
+		var timeout = setTimeout(() => this.triggerRecordedEvent(event), timeUntilEvent);
 		this.setState({ nextTimeout: timeout });
 	},
 
