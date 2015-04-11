@@ -9,7 +9,8 @@ module.exports = {
 	module: {
 		loaders: [
 			{ test: /\.js/, include: path.join(__dirname, 'src'), loader: 'babel-loader' },
-			{ test: /\.jsx/, loader: 'babel-loader' }
+			{ test: /\.jsx/, loader: 'babel-loader' },
+			{ test: /\.less/, loaders: ['style-loader', 'css-loader', 'less-loader'] }
 		]
 	},
 	resolve: {

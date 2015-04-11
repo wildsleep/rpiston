@@ -5,6 +5,8 @@ var Reflux = require('reflux');
 
 var MotorStore = require('../motorStore');
 
+require('./MotorBar.less');
+
 module.exports = React.createClass({
 	mixins: [Reflux.listenTo(MotorStore, 'onMotorChange')],
 

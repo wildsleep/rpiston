@@ -5,6 +5,8 @@ var MotorControlNumberButtons = require('./components/MotorControlNumberButtons'
 var MotorControlRelativeButtons = require('./components/MotorControlRelativeButtons');
 var MotorControlOffButton = require('./components/MotorControlOffButton');
 
+require('./main.less');
+
 React.render(
 	<div className='container'>
 		<MotorBar />
