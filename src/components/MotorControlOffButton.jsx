@@ -6,13 +6,13 @@ var Actions = require('../actions');
 module.exports = React.createClass({
 	render() {
 		return (
-			<div className='row'>
-				<div className='col-xs-12'>
+			<bootstrap.Row>
+				<bootstrap.Col xs={12}>
 					<bootstrap.Button block onClick={this.handleClick}>
 						Off
 					</bootstrap.Button>
-				</div>
-			</div>
+				</bootstrap.Col>
+			</bootstrap.Row>
 		);
 	},
 	handleClick() {

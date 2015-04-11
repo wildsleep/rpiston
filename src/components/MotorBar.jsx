@@ -10,11 +10,11 @@ module.exports = React.createClass({
 
 	render() {
 		return (
-			<div className='row'>
-				<div className='col-xs-12'>
+			<bootstrap.Row>
+				<bootstrap.Col xs={12}>
 					<bootstrap.ProgressBar active min={0} max={1} now={this.state.motorValue} />
-				</div>
-			</div>
+				</bootstrap.Col>
+			</bootstrap.Row>
 		);
 	},
 
