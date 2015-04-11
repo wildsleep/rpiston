@@ -8,6 +8,12 @@ var MotorStore = require('../motorStore');
 module.exports = React.createClass({
 	mixins: [Reflux.listenTo(MotorStore, 'onMotorChange')],
 
+	getInitialState() {
+		return {
+			motorValue: 0
+		};
+	},
+
 	render() {
 		return (
 			<bootstrap.Row>
@@ -18,10 +24,9 @@ module.exports = React.createClass({
 		);
 	},
 
-	getInitialState() {
-		return {
-			motorValue: 0
-		};
+	componentDidUpdate() {
+		var progressBarNode = React.findDOMNode(this).querySelector('.progress-bar');
+		progressBarNode.style['backgroundColor'] = barColor(this.state.motorValue);
 	},
 
 	onMotorChange(value) {
