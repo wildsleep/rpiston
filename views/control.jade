@@ -17,23 +17,5 @@ block scripts
 	script(src="/scripts/bundle.js")
 
 block content
-	.container
-		.row: .col-xs-12
-			.progress.progress-striped.active
-				.progress-bar.io-motor-display(style="width: 0%;")
-		.row
-			.col-xs-12
-				.btn-group.btn-group-justified
-					- var subdivisions = 8
-					- for (var n = 1; n <= subdivisions; ++n) {
-						.btn-group
-							button.btn.btn-default.io-motor-n(data-n=(n / subdivisions))= n
-					- }
-		.row
-			.col-xs-6
-				button.btn.btn-default.btn-block.io-motor-down &lt;
-			.col-xs-6
-				button.btn.btn-default.btn-block.io-motor-up &gt;
-		.row: .col-xs-12
-			button.btn.btn-default.btn-block.io-motor-off Off
-
+	#app
+	
