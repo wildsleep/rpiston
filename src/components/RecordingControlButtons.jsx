@@ -6,7 +6,7 @@ var Actions = require('../actions');
 
 var RecordingControlButtons = React.createClass({
 	propTypes: {
-		recordingState: React.PropTypes.string.isRequired
+		playbackState: React.PropTypes.string.isRequired
 	},
 
 	handlePlay() {
@@ -24,7 +24,11 @@ var RecordingControlButtons = React.createClass({
 	},
 
 	recordEnabled() {
-		return this.props.recordingState === 'stopped';
+		return this.props.playbackState === 'stopped';
+	},
+
+	playEnabled() {
+		return this.props.playbackState === 'stopped';
 	},
 
 	render() {
@@ -41,7 +45,7 @@ var RecordingControlButtons = React.createClass({
 					</bootstrap.Button>
 				</bootstrap.Col>
 				<bootstrap.Col xs={4}>
-					<bootstrap.Button bsStyle='success' block onClick={this.handlePlay}>
+					<bootstrap.Button bsStyle='success' block onClick={this.handlePlay} disabled={!this.playEnabled()}>
 						<i className='fa fa-play fa-fw' /> Play
 					</bootstrap.Button>
 				</bootstrap.Col>
