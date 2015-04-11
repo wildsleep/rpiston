@@ -11,7 +11,7 @@ console.log('Starting rPiston server...');
 
 var app = express();
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,9 +51,8 @@ app.get('/scripts/chroma.min.js', function (req, res) {
 	var minFile = file.replace(/\.js$/, '.min.js');
 	res.sendFile(minFile);
 });
-
-app.use('/scripts', express.static(__dirname + '/scripts'));
-app.use('/styles', express.static(__dirname + '/styles'));
+app.use('/scripts', express.static(path.join(__dirname, '../public/scripts')));
+app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
 
 function verifyAuthenticated(req, res, next) {
 	if (!req.isAuthenticated()) {
@@ -78,10 +77,7 @@ app.post('/logout', function (req, res) {
 	res.redirect('/');
 });
 
-app.get('/:page', verifyAuthenticated,
-	function (req, res) {
-		res.render(req.params.page);
-	});
+app.get('/control', verifyAuthenticated, function (req, res) { res.render('control'); });
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;
@@ -90,4 +86,3 @@ var server = app.listen(3000, function () {
 });
 
 require('./socket')(server);
-

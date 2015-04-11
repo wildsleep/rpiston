@@ -4,6 +4,7 @@
   "description": "Raspberry Pi motor control server",
   "main": "server.js",
   "scripts": {
+    "server": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "/u/wildsleep",
