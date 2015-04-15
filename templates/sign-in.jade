@@ -1,5 +1,14 @@
 extends ./layout.jade
 
+block styles
+	style.
+		.navbar-header {
+			float: left;
+		}
+		.navbar-non-collapse {
+			float: right;
+		}
+
 block content
 	nav.navbar.navbar-default: .container
 		.navbar-header

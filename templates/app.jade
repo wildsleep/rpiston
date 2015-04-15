@@ -4,10 +4,4 @@ block scripts
 	script(src=publicPath + "bundle.js")
 
 block content
-	nav.navbar.navbar-default: .container
-		.navbar-header
-			a.navbar-brand(href='/') rPiston
-		form.navbar-non-collapse(action='/sign-out' method='post')
-			input.btn.btn-default.navbar-btn(type='submit' value='Sign out')
-	#app.container
-	
+	#app
