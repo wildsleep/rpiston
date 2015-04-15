@@ -8,5 +8,6 @@ module.exports = Reflux.createActions([
 	'stopRecording',
 	'playRecording',
 	'saveRecording',
-	'loadRecording'
+	'loadRecording',
+	'updateParametricScript'
 ]);

@@ -3,26 +3,22 @@ var chroma = require('chroma-js');
 var React = require('react');
 var Reflux = require('reflux');
 
+var ProgressBar = require('./ProgressBar');
 require('./MotorBar.less');
 
 var MotorBar = React.createClass({
 	propTypes: {
-		motorValue: React.PropTypes.number.isRequired
+		motorValue: React.PropTypes.number.isRequired,
 	},
 
 	render() {
 		return (
 			<bootstrap.Row>
 				<bootstrap.Col xs={12}>
-					<bootstrap.ProgressBar active min={0} max={1} now={this.props.motorValue} />
+					<ProgressBar min={0} max={1} now={this.props.motorValue} color={this.barColor()} />
 				</bootstrap.Col>
 			</bootstrap.Row>
 		);
-	},
-
-	componentDidUpdate() {
-		var progressBarNode = React.findDOMNode(this).querySelector('.progress-bar');
-		progressBarNode.style['backgroundColor'] = this.barColor();
 	},
 
 	barColor() {
