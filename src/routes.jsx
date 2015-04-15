@@ -8,8 +8,8 @@ var ParametricControlPage = require('./views/ParametricControlPage');
 
 module.exports = (
 	<Router.Route path='/' handler={LayoutPage}>
-		<Router.DefaultRoute handler={ControlPage} />
-		<Router.Route path='/record' handler={RecordPage} />
-		<Router.Route path='/parametric' handler={ParametricControlPage} />
+		<Router.DefaultRoute name='control' handler={ControlPage} />
+		<Router.Route name='record' path='/record' handler={RecordPage} />
+		<Router.Route name='parametricControl' path='/parametric' handler={ParametricControlPage} />
 	</Router.Route>
 );
