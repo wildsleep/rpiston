@@ -15,8 +15,8 @@ var MotorControlButtons = React.createClass({
 						<bootstrap.ButtonGroup justified>
 							{[1,2,3,4,5,6,7,8].map((n) => {
 								return (
-									<bootstrap.ButtonGroup>
-										<NumberButton key={n} value={n} maxValue={8} />
+									<bootstrap.ButtonGroup key={n}>
+										<NumberButton value={n} maxValue={8} />
 									</bootstrap.ButtonGroup>
 								);
 							})}
