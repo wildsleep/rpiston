@@ -19,13 +19,13 @@ var ParametricScriptPresets = React.createClass({
 			<div>
 				<bootstrap.Panel header={<h3>Presets</h3>}>
 					<bootstrap.Row>
-						<bootstrap.Col xs={4}>
+						<bootstrap.Col xs={12} sm={4}>
 							<bootstrap.Button block onClick={this.handleClick.bind(this, 'sine')}>Sine</bootstrap.Button>
 						</bootstrap.Col>
-						<bootstrap.Col xs={4}>
+						<bootstrap.Col xs={12} sm={4}>
 							<bootstrap.Button block onClick={this.handleClick.bind(this, 'square')}>Square</bootstrap.Button>
 						</bootstrap.Col>
-						<bootstrap.Col xs={4}>
+						<bootstrap.Col xs={12} sm={4}>
 							<bootstrap.Button block onClick={this.handleClick.bind(this, 'cosinePulses')}>Cosine Pulses</bootstrap.Button>
 						</bootstrap.Col>
 					</bootstrap.Row>
