@@ -1,7 +1,8 @@
 var React = require('react');
 var Reflux = require('reflux');
 
-var ManualMotorControl = require('../components/ManualMotorControl');
+var MotorBar = require('../components/MotorBar');
+var MotorControlButtons = require('../components/MotorControlButtons');
 var motorStore = require('../stores/motorStore');
 
 var ControlPage = React.createClass({
@@ -15,7 +16,10 @@ var ControlPage = React.createClass({
 
 	render() {
 		return (
-			<ManualMotorControl motorValue={this.state.motorValue} />
+			<div>
+				<MotorBar motorValue={this.state.motorValue} />
+				<MotorControlButtons />
+			</div>
 		)
 	}
 });

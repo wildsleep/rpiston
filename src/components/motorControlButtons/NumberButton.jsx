@@ -1,7 +1,7 @@
 var bootstrap = require('react-bootstrap');
 var React = require('react');
 
-var Actions = require('../actions');
+var Actions = require('../../actions');
 
 var MotorControlNumberButton = React.createClass({
 	propTypes: {
@@ -9,18 +9,16 @@ var MotorControlNumberButton = React.createClass({
 		maxValue: React.PropTypes.number.isRequired
 	},
 
-	render() {
-		return (
-			<bootstrap.ButtonGroup>
-				<bootstrap.Button onClick={this.handleClick}>
-					{this.props.value}
-				</bootstrap.Button>
-			</bootstrap.ButtonGroup>
-		);
-	},
-
 	handleClick() {
 		Actions.setMotor(this.props.value / this.props.maxValue);
+	},
+
+	render() {
+		return (
+			<bootstrap.Button onClick={this.handleClick}>
+				{this.props.value}
+			</bootstrap.Button>
+		);
 	}
 });
 

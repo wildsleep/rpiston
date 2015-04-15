@@ -1,11 +1,12 @@
 var React = require('react');
 var Reflux = require('reflux');
 
-var ManualMotorControl = require('../components/ManualMotorControl');
-var RecordingControlButtons = require('../components/RecordingControlButtons');
+var MotorBar = require('../components/MotorBar');
+var MotorControlButtons = require('../components/MotorControlButtons');
+var RecordingRecordStopPlayButtons = require('../components/RecordingRecordStopPlayButtons');
 var RecordingLog = require('../components/RecordingLog');
 var RecordingPlayback = require('../components/RecordingPlayback');
-var RecordingSaveLoadButtons = require('../components/RecordingSaveLoadButtons');
+var RecordingLoadSaveButtons = require('../components/RecordingLoadSaveButtons');
 var motorStore = require('../stores/motorStore');
 var playbackStateStore = require('../stores/playbackStateStore');
 var recordingStore = require('../stores/recordingStore');
@@ -28,12 +29,12 @@ var RecordPage = React.createClass({
 	render() {
 		return (
 			<div>
-				<ManualMotorControl motorValue={this.state.motorValue} />
+				<MotorBar motorValue={this.state.motorValue} />
+				<MotorControlButtons />
 				<hr />
-				<RecordingControlButtons playbackState={this.state.playbackState} />
+				<RecordingRecordStopPlayButtons playbackState={this.state.playbackState} />
 				<RecordingLog recording={this.state.recording} />
-				<RecordingSaveLoadButtons />
-				
+				<RecordingLoadSaveButtons />
 				<RecordingPlayback playbackState={this.state.playbackState} recording={this.state.recording} />
 			</div>
 		)
