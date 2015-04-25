@@ -2,7 +2,7 @@
   "name": "rPiston",
   "version": "1.0.0",
   "description": "Raspberry Pi motor control server",
-  "main": "server.js",
+  "main": "server/index.js",
   "scripts": {
     "build": "webpack --config webpack-production.config.js --progess --profile --colors",
     "dev-server": "webpack-dev-server --config webpack-dev-server.config.js --progress --colors --port 2992 --inline",

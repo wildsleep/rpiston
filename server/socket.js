@@ -5,6 +5,8 @@ module.exports = function (server) {
 	var connections = 0;
 	var motorValue = 0;
 
+	mcp4725.analogWrite(0, true);
+
 	io.on('connection', function (socket) {
 		++connections;
 		console.log('Connection established (total: %s)', connections);
