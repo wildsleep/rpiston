@@ -1,20 +1,20 @@
 var bootstrap = require('react-bootstrap');
 var React = require('react');
+var util = require('util');
 
-var Recording = require('../models/Recording');
-require('./RecordingLog.less');
+require('./ConnectionLog.less');
 
 var RecordingLog = React.createClass({
 	propTypes: {
-		recording: React.PropTypes.instanceOf(Recording).isRequired
+		log: React.PropTypes.array.isRequired
 	},
 
 	render() {
 		return (
 			<bootstrap.Row>
 				<bootstrap.Col xs={12}>
-					<pre className='recording-text'>
-						{this.props.recording.toText()}
+					<pre className='connection-log'>
+						{this.props.log.map(item => util.inspect(item)).join('\n')}
 					</pre>
 				</bootstrap.Col>
 			</bootstrap.Row>

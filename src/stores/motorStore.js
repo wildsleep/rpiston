@@ -1,6 +1,6 @@
-var io = require('socket.io-client');
 var Reflux = require('reflux');
 
+var socket = require('../socket');
 var Actions = require('../actions');
 
 module.exports = Reflux.createStore({
@@ -10,8 +10,7 @@ module.exports = Reflux.createStore({
 		this.value = 0;
 		this.increment = 0.05;
 
-		this.socket = io();
-		this.socket.on('motor', this.updateValue.bind(this));
+		socket.on('motor', this.updateValue.bind(this));
 	},
 
 	getDefaultData() {
@@ -24,14 +23,14 @@ module.exports = Reflux.createStore({
 	},
 
 	onSetMotor(value) {
-		this.socket.emit('set-motor', value);
+		socket.emit('set-motor', value);
 	},
 
 	onDecreaseMotor() {
-		this.socket.emit('set-motor', Math.max(0, this.value - this.increment));
+		socket.emit('set-motor', Math.max(0, this.value - this.increment));
 	},
 
 	onIncreaseMotor() {
-		this.socket.emit('set-motor', Math.min(1, this.value + this.increment));
+		socket.emit('set-motor', Math.min(1, this.value + this.increment));
 	}
 });
