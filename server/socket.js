@@ -1,7 +1,10 @@
 var mcp4725 = require('./mcp4725');
 
 module.exports = function (server) {
-	var io = require('socket.io')(server);
+	var io = require('socket.io')(server, {
+		pingInterval: 3000,
+		pingTimeout: 2000
+	});
 	var connections = 0;
 	var motorValue = 0;
 
