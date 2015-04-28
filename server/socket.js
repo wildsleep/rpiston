@@ -1,4 +1,7 @@
 var mcp4725 = require('./mcp4725');
+var motorConfig = require('./motorConfig');
+
+var EPSILON = 0.0001;
 
 module.exports = function (server) {
 	var io = require('socket.io')(server, {
@@ -28,8 +31,11 @@ module.exports = function (server) {
 	}
 
 	function setMotor(value) {
-		console.log('Set motor to %s', value);
-		mcp4725.analogWrite(value);
+		var adjustedValue = (value < EPSILON) ? 0 :
+			motorConfig.minDeadZone + (value * (1 - motorConfig.minDeadZone));
+
+		console.log('Set motor to %s (adjusted: %s)', value, adjustedValue);
+		mcp4725.analogWrite(adjustedValue);
 		motorValue = value;
 		io.sockets.emit('motor', value);
 	}
