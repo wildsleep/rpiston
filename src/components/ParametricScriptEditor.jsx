@@ -15,7 +15,7 @@ var ParametricScriptEditor = React.createClass({
 	},
 
 	handleChange(e) {
-		Actions.updateParametricScript(e.target.value);
+		Actions.updateParametricScript.trigger(e.target.value);
 	},
 
 	render() {
