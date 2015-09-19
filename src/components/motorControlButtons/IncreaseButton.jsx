@@ -1,20 +1,20 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
+export default class IncreaseButton extends Component {
+	static propTypes = {
+		increaseMotor: PropTypes.func.isRequired
+	}
 
-var IncreaseButton = React.createClass({
 	handleClick() {
-		Actions.increaseMotor();
-	},
+		this.props.increaseMotor();
+	}
 
 	render() {
 		return (
-			<bootstrap.Button block onClick={this.handleClick}>
+			<Button block onClick={this.handleClick.bind(this)}>
 				<i className='fa fa-chevron-right' />
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = IncreaseButton;
+}

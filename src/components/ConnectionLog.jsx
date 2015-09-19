@@ -1,25 +1,23 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var util = require('util');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
+import { inspect } from 'util';
 
 require('./ConnectionLog.less');
 
-var RecordingLog = React.createClass({
-	propTypes: {
-		log: React.PropTypes.array.isRequired
-	},
+export default class ConnectionLog extends Component {
+	static propTypes = {
+		log: PropTypes.array.isRequired
+	}
 
 	render() {
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={12}>
+			<Row>
+				<Col xs={12}>
 					<pre className='connection-log'>
-						{this.props.log.map(item => util.inspect(item)).join('\n')}
+						{this.props.log.map(inspect).join('\n')}
 					</pre>
-				</bootstrap.Col>
-			</bootstrap.Row>
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = RecordingLog;
+}

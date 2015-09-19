@@ -1,29 +1,23 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
-
-var RecordingPlayButton = React.createClass({
-	propTypes: {
-		playbackState: React.PropTypes.string.isRequired
-	},
-
-	handlePlay() {
-		Actions.playRecording();
-	},
+export default class RecordingPlayButton extends Component {
+	static propTypes = {
+		playbackState: PropTypes.string.isRequired,
+		playRecording: PropTypes.func.isRequired
+	}
 
 	playEnabled() {
 		return this.props.playbackState === 'stopped';
-	},
+	}
 
 	render() {
+		const { playRecording } = this.props;
+		const disabled = !this.playEnabled();
 		return (
-			<bootstrap.Button bsStyle='success' block onClick={this.handlePlay} disabled={!this.playEnabled()}>
+			<Button bsStyle='success' block onClick={playRecording} disabled={disabled}>
 				<i className='fa fa-play fa-fw' /> Play
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = RecordingPlayButton;
+}

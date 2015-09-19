@@ -1,24 +1,26 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
-var Actions = require('../actions');
-var RecordingLoadButton = require('./recordingButtons/RecordingLoadButton');
-var RecordingSaveButton = require('./recordingButtons/RecordingSaveButton');
+import RecordingLoadButton from './recordingButtons/RecordingLoadButton';
+import RecordingSaveButton from './recordingButtons/RecordingSaveButton';
 
-var RecordingLoadSaveButtons = React.createClass({
+export default class RecordingLoadSaveButtons extends Component {
+	static propTypes = {
+		loadRecording: PropTypes.func.isRequired,
+		saveRecording: PropTypes.func.isRequired
+	}
+
 	render() {
+		const { loadRecording, saveRecording } = this.props;
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={6}>
-					<RecordingLoadButton />
-				</bootstrap.Col>
-				<bootstrap.Col xs={6}>
-					<RecordingSaveButton />
-				</bootstrap.Col>
-			</bootstrap.Row>
+			<Row>
+				<Col xs={6}>
+					<RecordingLoadButton loadRecording={loadRecording} />
+				</Col>
+				<Col xs={6}>
+					<RecordingSaveButton saveRecording={saveRecording} />
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = RecordingLoadSaveButtons;
+}

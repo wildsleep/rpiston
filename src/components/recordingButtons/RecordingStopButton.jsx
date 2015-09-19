@@ -1,21 +1,17 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
+export default class RecordingStopButton extends Component {
+	static propTypes = {
+		stopRecording: PropTypes.func.isRequired
+	}
 
-var RecordingStopButton = React.createClass({
-	handleStop() {
-		Actions.stopRecording();
-	},
-	
 	render() {
+		const { stopRecording } = this.props;
 		return (
-			<bootstrap.Button block onClick={this.handleStop}>
+			<Button block bsStyle='primary' onClick={stopRecording}>
 				<i className='fa fa-stop fa-fw' /> Stop
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = RecordingStopButton;
+}

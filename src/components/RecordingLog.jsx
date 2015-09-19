@@ -1,25 +1,24 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
-var Recording = require('../models/Recording');
+import Recording from '../models/Recording';
+
 require('./RecordingLog.less');
 
-var RecordingLog = React.createClass({
-	propTypes: {
+export default class RecordingLog extends Component {
+	static propTypes = {
 		recording: React.PropTypes.instanceOf(Recording).isRequired
-	},
+	}
 
 	render() {
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={12}>
+			<Row>
+				<Col xs={12}>
 					<pre className='recording-text'>
 						{this.props.recording.toText()}
 					</pre>
-				</bootstrap.Col>
-			</bootstrap.Row>
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = RecordingLog;
+}

@@ -1,33 +1,35 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 
-var ProgressBar = React.createClass({
-	propTypes: {
-		min: React.PropTypes.number.isRequired,
-		max: React.PropTypes.number.isRequired,
-		now: React.PropTypes.number.isRequired,
-		color: React.PropTypes.string
-	},
+export default class ProgressBar extends Component {
+	static propTypes = {
+		min: PropTypes.number.isRequired,
+		max: PropTypes.number.isRequired,
+		now: PropTypes.number.isRequired,
+		color: PropTypes.string
+	}
 
 	calculateWidth() {
-		return (100*(this.props.now - this.props.min) / (this.props.max - this.props.min)) + '%';
-	},
+		const { now, min, max } = this.props;
+		return (100 * (now - min) / (max - min)) + '%';
+	}
 
 	style() {
-		var result = {
+		const result = {
 			width: this.calculateWidth()
 		};
+
 		if (this.props.color)
 			result.backgroundColor = this.props.color;
+
 		return result;
-	},
+	}
 
 	render() {
+		const style = this.style();
 		return (
 			<div className='progress progress-striped active'>
-				<div className='progress-bar' role='progressbar' style={this.style()} />
+				<div className='progress-bar' role='progressbar' style={style} />
 			</div>
 		);
 	}
-});
-
-module.exports = ProgressBar;
+}

@@ -1,28 +1,27 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
-var Actions = require('../actions');
-var RecordingStopButton = require('./recordingButtons/RecordingStopButton');
-var RecordingPlayButton = require('./recordingButtons/RecordingPlayButton');
+import RecordingStopButton from './recordingButtons/RecordingStopButton';
+import RecordingPlayButton from './recordingButtons/RecordingPlayButton';
 
-var RecordingStopPlayButtons = React.createClass({
-	propTypes: {
-		playbackState: React.PropTypes.string.isRequired
-	},
+export default class RecordingStopPlayButtons extends Component {
+	static propTypes = {
+		stopRecording: PropTypes.func.isRequired,
+		playRecording: PropTypes.func.isRequired,
+		playbackState: PropTypes.string.isRequired
+	}
 
 	render() {
+		const { stopRecording, playRecording, playbackState } = this.props;
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={6}>
-					<RecordingStopButton />
-				</bootstrap.Col>
-				<bootstrap.Col xs={6}>
-					<RecordingPlayButton playbackState={this.props.playbackState} />
-				</bootstrap.Col>
-			</bootstrap.Row>
+			<Row>
+				<Col xs={6}>
+					<RecordingStopButton stopRecording={stopRecording} />
+				</Col>
+				<Col xs={6}>
+					<RecordingPlayButton playRecording={playRecording} playbackState={playbackState} />
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = RecordingStopPlayButtons;
+}

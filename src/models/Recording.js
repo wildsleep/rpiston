@@ -1,10 +1,10 @@
-class Recording {
+export default class Recording {
 	constructor(events) {
 		this.events = events || [];
 	}
 
 	addEvent(event) {
-		this.events.push(event);
+		return new Recording(this.events.concat(event));
 	}
 
 	nextEventAfter(time) {
@@ -29,5 +29,3 @@ class Recording {
 		return new Recording(events);
 	}
 }
-
-module.exports = Recording;

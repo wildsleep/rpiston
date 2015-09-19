@@ -1,17 +1,21 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var routerBootstrap = require('react-router-bootstrap');
+import React, { Component } from 'react';
+import { Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-var LinkNav = React.createClass({
+export default class LinkNav extends Component {
 	render() {
 		return (
-			<bootstrap.Nav navbar>
-				<routerBootstrap.NavItemLink to='control'>Control</routerBootstrap.NavItemLink>
-				<routerBootstrap.NavItemLink to='record'>Record</routerBootstrap.NavItemLink>
-				<routerBootstrap.NavItemLink to='parametricControl'>Parametric</routerBootstrap.NavItemLink>
-			</bootstrap.Nav>
+			<Nav navbar>
+				<LinkContainer to='/'>
+					<NavItem>Control</NavItem>
+				</LinkContainer>
+				<LinkContainer to='/record'>
+					<NavItem>Record</NavItem>
+				</LinkContainer>
+				<LinkContainer to='/parametric'>
+					<NavItem>Parametric</NavItem>
+				</LinkContainer>
+			</Nav>
 		);
 	}
-});
-
-module.exports = LinkNav;
+}

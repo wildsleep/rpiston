@@ -1,19 +1,17 @@
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 
 require('./ConnectionStatusIndicator.less');
 
-var ConnectionStatusIndicator = React.createClass({
-	propTypes: {
-		status: React.PropTypes.string.isRequired,
-		ok: React.PropTypes.bool.isRequired
-	},
+export default class ConnectionStatusIndicator extends Component {
+	static propTypes = {
+		status: PropTypes.string.isRequired,
+		ok: PropTypes.bool.isRequired
+	}
 
 	render() {
-		var className = this.props.ok ? 'connection-ok' : 'connection-error';
+		const className = this.props.ok ? 'connection-ok' : 'connection-error';
 		return (
 			<span className={className}>{this.props.status}</span>
 		);
 	}
-});
-
-module.exports = ConnectionStatusIndicator;
+}

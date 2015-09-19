@@ -1,20 +1,20 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
+export default class OffButton extends Component {
+	static propTypes = {
+		setMotor: PropTypes.func.isRequired
+	}
 
-var OffButton = React.createClass({
 	handleClick() {
-		Actions.setMotor(0);
-	},
+		this.props.setMotor(0);
+	}
 
 	render() {
 		return (
-			<bootstrap.Button block onClick={this.handleClick}>
+			<Button block onClick={this.handleClick.bind(this)}>
 				Off
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = OffButton;
+}

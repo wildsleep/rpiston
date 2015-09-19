@@ -1,21 +1,17 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
-
-var RecordingSaveButton = React.createClass({
-	handleSave() {
-		Actions.saveRecording();
-	},
+export default class RecordingSaveButton extends Component {
+	static propTypes = {
+		saveRecording: PropTypes.func.isRequired
+	}
 
 	render() {
+		const { saveRecording } = this.props;
 		return (
-			<bootstrap.Button block bsStyle='primary' onClick={this.handleSave}>
+			<Button block bsStyle='primary' onClick={saveRecording}>
 				<i className='fa fa-save fa-fw' /> Save
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = RecordingSaveButton;
+}

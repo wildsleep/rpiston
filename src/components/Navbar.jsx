@@ -1,28 +1,26 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Router = require('react-router');
-var routerBootstrap = require('react-router-bootstrap');
+import React, { Component, PropTypes } from 'react';
+import { Navbar as BootstrapNavbar, CollapsibleNav } from 'react-bootstrap';
 
-var LinkNav = require('./LinkNav');
-var SignOutNav = require('./SignOutNav');
+import LinkNav from './LinkNav';
+import SignOutNav from './SignOutNav';
+
 require('./Navbar.less');
 
-var Navbar = React.createClass({
-	propTypes: {
-		connectionStatus: React.PropTypes.string.isRequired,
-		connectionOk: React.PropTypes.bool.isRequired
-	},
+export default class Navbar extends Component {
+	static propTypes = {
+		connectionStatus: PropTypes.string.isRequired,
+		connectionOk: PropTypes.bool.isRequired
+	}
 
 	render() {
+		const { connectionStatus, connectionOk } = this.props;
 		return (
-			<bootstrap.Navbar brand='rPiston' toggleNavKey={'toggleNav'}>
-				<bootstrap.CollapsableNav eventKey={'toggleNav'}>
+			<BootstrapNavbar brand='rPiston' toggleNavKey={'toggleNav'}>
+				<CollapsibleNav eventKey={'toggleNav'}>
 					<LinkNav />
-					<SignOutNav status={this.props.connectionStatus} ok={this.props.connectionOk} />
-				</bootstrap.CollapsableNav>
-			</bootstrap.Navbar>
+					<SignOutNav status={connectionStatus} ok={connectionOk} />
+				</CollapsibleNav>
+			</BootstrapNavbar>
 		);
 	}
-});
-
-module.exports = Navbar;
+}

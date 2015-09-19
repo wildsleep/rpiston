@@ -1,35 +1,33 @@
-var bootstrap = require('react-bootstrap');
-var chroma = require('chroma-js');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
+import { interpolate } from 'chroma-js';
 
-var ProgressBar = require('./ProgressBar');
+import ProgressBar from './ProgressBar';
+
 require('./MotorBar.less');
 
-var MotorBar = React.createClass({
-	propTypes: {
-		motorValue: React.PropTypes.number.isRequired,
-	},
+export default class MotorBar extends Component {
+	static propTypes = {
+		motorValue: PropTypes.number.isRequired,
+	}
 
 	render() {
+		const { motorValue } = this.props;
+		const barColor = this.barColor(motorValue);
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={12}>
-					<ProgressBar min={0} max={1} now={this.props.motorValue} color={this.barColor()} />
-				</bootstrap.Col>
-			</bootstrap.Row>
+			<Row>
+				<Col xs={12}>
+					<ProgressBar min={0} max={1} now={motorValue} color={barColor} />
+				</Col>
+			</Row>
 		);
-	},
+	}
 
-	barColor() {
-		var value = this.props.motorValue;
-		var zeroColor = '#158cba';
-		var oneColor = '#ff4136';
+	barColor(value) {
+		const zeroColor = '#158cba';
+		const oneColor = '#ff4136';
 		if (value < 0.5)
 			return zeroColor;
-		value = (value - 0.5) * 2;
-		return chroma.interpolate(zeroColor, oneColor, value, 'lab').hex();
+		return interpolate(zeroColor, oneColor, (value - 0.5) * 2, 'lab').hex();
 	}
-});
-
-module.exports = MotorBar;
+}

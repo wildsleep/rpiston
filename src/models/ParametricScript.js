@@ -1,4 +1,4 @@
-class ParametricScript {
+export default class ParametricScript {
 	constructor(text, interval) {
 		this.text = text;
 		this.fn = parse(text);
@@ -47,5 +47,3 @@ function parse(text) {
 function clamp(x) {
 	return Math.max(0, Math.min(1, x));
 }
-
-module.exports = ParametricScript;

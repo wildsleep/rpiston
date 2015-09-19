@@ -1,31 +1,32 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var routerBootstrap = require('react-router-bootstrap');
+import React, { Component, PropTypes } from 'react';
+import { Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
-var ConnectionStatusIndicator = require('./ConnectionStatusIndicator');
+import ConnectionStatusIndicator from './ConnectionStatusIndicator';
 
-var SignOutNav = React.createClass({
-	propTypes: {
-		status: React.PropTypes.string.isRequired,
-		ok: React.PropTypes.bool.isRequired
-	},
+export default class SignOutNav extends Component {
+	static propTypes = {
+		status: PropTypes.string.isRequired,
+		ok: PropTypes.bool.isRequired
+	}
 
 	handleSignOut(e) {
 		e.target.closest('form').submit();
-	},
+	}
 
 	render() {
+		const { status, ok } = this.props;
 		return (
 			<form action='/sign-out' method='post'>
-				<bootstrap.Nav navbar right>
-					<routerBootstrap.NavItemLink to='connectionLog'>
-						<ConnectionStatusIndicator status={this.props.status} ok={this.props.ok} />
-					</routerBootstrap.NavItemLink>
-					<bootstrap.NavItem onClick={this.handleSignOut}>Sign out</bootstrap.NavItem>
-				</bootstrap.Nav>
+				<Nav navbar right>
+					<LinkContainer to='/connectionLog'>
+						<NavItem>
+							<ConnectionStatusIndicator status={status} ok={ok} />
+						</NavItem>
+					</LinkContainer>
+					<NavItem onClick={this.handleSignOut}>Sign out</NavItem>
+				</Nav>
 			</form>
 		);
 	}
-});
-
-module.exports = SignOutNav;
+}

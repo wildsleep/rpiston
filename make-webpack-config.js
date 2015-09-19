@@ -10,14 +10,19 @@ module.exports = function (options) {
 		filename: 'bundle.js'
 	};
 	var loaders = [
-		{ test: /\.js/, include: path.join(__dirname, 'src'), loader: 'babel-loader' },
-		{ test: /\.jsx/, loader: 'babel-loader' },
-		{ test: /\.less/, loaders: [
-			'style-loader',
-			'css-loader',
-			'autoprefixer-loader?browsers=last 2 version',
-			'less-loader'
-		]}
+		{
+			test: /\.jsx?/,
+			include: path.join(__dirname, 'src'),
+			loader: 'babel-loader?stage=0'
+		}, {
+			test: /\.less/,
+			loaders: [
+				'style-loader',
+				'css-loader',
+				'autoprefixer-loader?browsers=last 2 version',
+				'less-loader'
+			]
+		}
 	];
 	var extensions = ['', '.js', '.jsx'];
 
@@ -25,6 +30,7 @@ module.exports = function (options) {
 		entry: entry,
 		output: output,
 		target: 'web',
+		devtool: 'source-map',
 		module: {
 			loaders: loaders
 		},

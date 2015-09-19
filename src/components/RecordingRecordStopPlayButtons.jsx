@@ -1,32 +1,32 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col } from 'react-bootstrap';
 
-var Actions = require('../actions');
-var RecordingRecordButton = require('./recordingButtons/RecordingRecordButton');
-var RecordingStopButton = require('./recordingButtons/RecordingStopButton');
-var RecordingPlayButton = require('./recordingButtons/RecordingPlayButton');
+import RecordingRecordButton from './recordingButtons/RecordingRecordButton';
+import RecordingStopButton from './recordingButtons/RecordingStopButton';
+import RecordingPlayButton from './recordingButtons/RecordingPlayButton';
 
-var RecordingRecordStopPlayButtons = React.createClass({
-	propTypes: {
-		playbackState: React.PropTypes.string.isRequired
-	},
+export default class RecordingRecordStopPlayButtons extends Component {
+	static propTypes = {
+		startRecording: PropTypes.func.isRequired,
+		stopRecording: PropTypes.func.isRequired,
+		playRecording: PropTypes.func.isRequired,
+		playbackState: PropTypes.string.isRequired
+	}
 
 	render() {
+		const { startRecording, stopRecording, playRecording, playbackState } = this.props;
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={4}>
-					<RecordingRecordButton playbackState={this.props.playbackState} />
-				</bootstrap.Col>
-				<bootstrap.Col xs={4}>
-					<RecordingStopButton />
-				</bootstrap.Col>
-				<bootstrap.Col xs={4}>
-					<RecordingPlayButton playbackState={this.props.playbackState} />
-				</bootstrap.Col>
-			</bootstrap.Row>
+			<Row>
+				<Col xs={4}>
+					<RecordingRecordButton startRecording={startRecording} playbackState={playbackState} />
+				</Col>
+				<Col xs={4}>
+					<RecordingStopButton stopRecording={stopRecording} />
+				</Col>
+				<Col xs={4}>
+					<RecordingPlayButton playRecording={playRecording} playbackState={playbackState} />
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = RecordingRecordStopPlayButtons;
+}

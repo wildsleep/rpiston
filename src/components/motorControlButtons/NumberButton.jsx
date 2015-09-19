@@ -1,25 +1,23 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
+import { Button } from 'react-bootstrap';
 
-var Actions = require('../../actions');
-
-var MotorControlNumberButton = React.createClass({
-	propTypes: {
+export default class NumberButton extends Component {
+	static propTypes = {
+		setMotor: PropTypes.func.isRequired,
 		value: React.PropTypes.number.isRequired,
 		maxValue: React.PropTypes.number.isRequired
-	},
+	}
 
 	handleClick() {
-		Actions.setMotor(this.props.value / this.props.maxValue);
-	},
+		const { value, maxValue } = this.props;
+		this.props.setMotor(value / maxValue);
+	}
 
 	render() {
 		return (
-			<bootstrap.Button onClick={this.handleClick}>
+			<Button block onClick={this.handleClick.bind(this)}>
 				{this.props.value}
-			</bootstrap.Button>
+			</Button>
 		);
 	}
-});
-
-module.exports = MotorControlNumberButton;
+}

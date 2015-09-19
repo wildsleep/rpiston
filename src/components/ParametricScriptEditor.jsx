@@ -1,32 +1,38 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
-var Reflux = require('reflux');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col, Input } from 'react-bootstrap';
 
-var Actions = require('../actions');
-var ParametricScript = require('../models/ParametricScript');
+import ParametricScript from '../models/ParametricScript';
 
-var ParametricScriptEditor = React.createClass({
-	propTypes: {
-		script: React.PropTypes.instanceOf(ParametricScript).isRequired
-	},
+export default class ParametricScriptEditor extends Component {
+	static propTypes = {
+		script: PropTypes.instanceOf(ParametricScript).isRequired,
+		updateParametricScript: PropTypes.func.isRequired
+	}
 
 	validationState() {
 		return this.props.script.isValid ? null : 'error';
-	},
+	}
 
 	handleChange(e) {
-		Actions.updateParametricScript.trigger(e.target.value);
-	},
+		const newScript = e.target.value;
+		this.props.updateParametricScript(newScript);
+	}
 
 	render() {
+		const scriptText = this.props.script.toText();
+		const handleChange = this.handleChange.bind(this);
+		const bsStyle = this.validationState();
 		return (
-			<bootstrap.Row>
-				<bootstrap.Col xs={12}>
-					<bootstrap.Input type='textarea' standalone value={this.props.script.toText()} placeholder='abs(sin(t/1000))' bsStyle={this.validationState()} onChange={this.handleChange} />
-				</bootstrap.Col>
-			</bootstrap.Row>
+			<Row>
+				<Col xs={12}>
+					<Input type='textarea'
+						standalone
+						value={scriptText}
+						placeholder='abs(sin(t/1000))'
+						bsStyle={bsStyle}
+						onChange={handleChange} />
+				</Col>
+			</Row>
 		);
 	}
-});
-
-module.exports = ParametricScriptEditor;
+}

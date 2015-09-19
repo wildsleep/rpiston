@@ -1,44 +1,49 @@
-var bootstrap = require('react-bootstrap');
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
+import { Row, Col, ButtonGroup } from 'react-bootstrap';
 
-var NumberButton = require('./motorControlButtons/NumberButton');
-var DecreaseButton = require('./motorControlButtons/DecreaseButton');
-var IncreaseButton = require('./motorControlButtons/IncreaseButton');
-var OffButton = require('./motorControlButtons/OffButton');
+import NumberButton from './motorControlButtons/NumberButton';
+import DecreaseButton from './motorControlButtons/DecreaseButton';
+import IncreaseButton from './motorControlButtons/IncreaseButton';
+import OffButton from './motorControlButtons/OffButton';
 
-var MotorControlButtons = React.createClass({
+export default class MotorControlButtons extends Component {
+	static propTypes = {
+		setMotor: PropTypes.func.isRequired,
+		decreaseMotor: PropTypes.func.isRequired,
+		increaseMotor: PropTypes.func.isRequired
+	}
+
 	render() {
+		const { setMotor, decreaseMotor, increaseMotor } = this.props;
 		return (
 			<div>
-				<bootstrap.Row>
-					<bootstrap.Col xs={12}>
-						<bootstrap.ButtonGroup justified>
+				<Row>
+					<Col xs={12}>
+						<ButtonGroup justified>
 							{[1,2,3,4,5,6,7,8].map((n) => {
 								return (
-									<bootstrap.ButtonGroup key={n}>
-										<NumberButton value={n} maxValue={8} />
-									</bootstrap.ButtonGroup>
+									<ButtonGroup key={n}>
+										<NumberButton value={n} maxValue={8} setMotor={setMotor} />
+									</ButtonGroup>
 								);
 							})}
-						</bootstrap.ButtonGroup>
-					</bootstrap.Col>
-				</bootstrap.Row>
-				<bootstrap.Row>
-					<bootstrap.Col xs={6}>
-						<DecreaseButton />
-					</bootstrap.Col>
-					<bootstrap.Col xs={6}>
-						<IncreaseButton />
-					</bootstrap.Col>
-				</bootstrap.Row>
-				<bootstrap.Row>
-					<bootstrap.Col xs={12}>
-						<OffButton />
-					</bootstrap.Col>
-				</bootstrap.Row>
+						</ButtonGroup>
+					</Col>
+				</Row>
+				<Row>
+					<Col xs={6}>
+						<DecreaseButton decreaseMotor={decreaseMotor} />
+					</Col>
+					<Col xs={6}>
+						<IncreaseButton increaseMotor={increaseMotor} />
+					</Col>
+				</Row>
+				<Row>
+					<Col xs={12}>
+						<OffButton setMotor={setMotor} />
+					</Col>
+				</Row>
 			</div>	
 		);
 	}
-});
-
-module.exports = MotorControlButtons;
+}
