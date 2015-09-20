@@ -16,10 +16,11 @@ export default class RecordingLoadButton extends Component {
 	}
 
 	render() {
+		const handleFile = this.handleFile.bind(this);
 		return (
 			<Button componentClass='label' block>
 				<i className='fa fa-folder-open fa-fw' /> Load
-				<input type='file' onChange={this.handleFile} style={{position: 'fixed', top: '-1000px'}} />
+				<input type='file' onChange={handleFile} style={{position: 'fixed', top: '-1000px'}} />
 			</Button>
 		);
 	}

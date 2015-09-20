@@ -54849,11 +54849,11 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
+	var _filesaverJs = __webpack_require__(563);
+	
 	var _constantsActionTypes = __webpack_require__(268);
 	
 	var ActionTypes = _interopRequireWildcard(_constantsActionTypes);
-	
-	var saveAs = __webpack_require__(563);
 	
 	function startRecording() {
 		return { type: ActionTypes.START_RECORDING };
@@ -54871,11 +54871,14 @@
 		return { type: ActionTypes.LOAD_RECORDING, data: data };
 	}
 	
-	function saveRecording(recording) {
-		var serialized = new Blob([recording.toText()], { type: 'text/plain;charset=utf-8' });
-		saveAs(serialized, 'rpiston_' + new Date().toISOString() + '.txt');
+	function saveRecording() {
+		return function (dispatch, getState) {
+			var recording = getState().recording.currentRecording;
+			var serialized = new Blob([recording.toText()], { type: 'text/plain;charset=utf-8' });
+			(0, _filesaverJs.saveAs)(serialized, 'rpiston_' + new Date().toISOString() + '.txt');
 	
-		return { type: ActionTypes.SAVE_RECORDING, recording: recording };
+			return { type: ActionTypes.SAVE_RECORDING, recording: recording };
+		};
 	}
 
 /***/ },
@@ -55785,12 +55788,13 @@
 		}, {
 			key: 'render',
 			value: function render() {
+				var handleFile = this.handleFile.bind(this);
 				return _react2['default'].createElement(
 					_reactBootstrap.Button,
 					{ componentClass: 'label', block: true },
 					_react2['default'].createElement('i', { className: 'fa fa-folder-open fa-fw' }),
 					' Load',
-					_react2['default'].createElement('input', { type: 'file', onChange: this.handleFile, style: { position: 'fixed', top: '-1000px' } })
+					_react2['default'].createElement('input', { type: 'file', onChange: handleFile, style: { position: 'fixed', top: '-1000px' } })
 				);
 			}
 		}], [{
