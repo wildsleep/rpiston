@@ -74,19 +74,19 @@
 	
 	var _containersControlPage2 = _interopRequireDefault(_containersControlPage);
 	
-	var _containersRecordPage = __webpack_require__(561);
+	var _containersRecordPage = __webpack_require__(562);
 	
 	var _containersRecordPage2 = _interopRequireDefault(_containersRecordPage);
 	
-	var _containersParametricControlPage = __webpack_require__(576);
+	var _containersParametricControlPage = __webpack_require__(577);
 	
 	var _containersParametricControlPage2 = _interopRequireDefault(_containersParametricControlPage);
 	
-	var _containersConnectionLogPage = __webpack_require__(581);
+	var _containersConnectionLogPage = __webpack_require__(582);
 	
 	var _containersConnectionLogPage2 = _interopRequireDefault(_containersConnectionLogPage);
 	
-	__webpack_require__(588);
+	__webpack_require__(589);
 	
 	var history = (0, _historyLibCreateBrowserHistory2['default'])();
 	var store = (0, _storeConfigureStore2['default'])();
@@ -51590,6 +51590,10 @@
 	
 	var _componentsMotorControlButtons2 = _interopRequireDefault(_componentsMotorControlButtons);
 	
+	var _componentsMotorHotkeys = __webpack_require__(561);
+	
+	var _componentsMotorHotkeys2 = _interopRequireDefault(_componentsMotorHotkeys);
+	
 	function mapStateToProps(state) {
 		return { motorValue: state.motor };
 	}
@@ -51619,6 +51623,10 @@
 					null,
 					_react2['default'].createElement(_componentsMotorBar2['default'], { motorValue: motorValue }),
 					_react2['default'].createElement(_componentsMotorControlButtons2['default'], {
+						setMotor: motorActions.setMotor,
+						decreaseMotor: motorActions.decreaseMotor,
+						increaseMotor: motorActions.increaseMotor }),
+					_react2['default'].createElement(_componentsMotorHotkeys2['default'], {
 						setMotor: motorActions.setMotor,
 						decreaseMotor: motorActions.decreaseMotor,
 						increaseMotor: motorActions.increaseMotor })
@@ -54713,6 +54721,121 @@
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(276);
+	
+	var _motorControlButtonsNumberButton = __webpack_require__(557);
+	
+	var _motorControlButtonsNumberButton2 = _interopRequireDefault(_motorControlButtonsNumberButton);
+	
+	var _motorControlButtonsDecreaseButton = __webpack_require__(558);
+	
+	var _motorControlButtonsDecreaseButton2 = _interopRequireDefault(_motorControlButtonsDecreaseButton);
+	
+	var _motorControlButtonsIncreaseButton = __webpack_require__(559);
+	
+	var _motorControlButtonsIncreaseButton2 = _interopRequireDefault(_motorControlButtonsIncreaseButton);
+	
+	var _motorControlButtonsOffButton = __webpack_require__(560);
+	
+	var _motorControlButtonsOffButton2 = _interopRequireDefault(_motorControlButtonsOffButton);
+	
+	var ZERO = 48;
+	var EIGHT = ZERO + 8;
+	var NUMZERO = 96;
+	var NUMEIGHT = NUMZERO + 8;
+	var PLUS = 187;
+	var MINUS = 189;
+	var NUMPLUS = 107;
+	var NUMMINUS = 109;
+	var SPACE = 32;
+	
+	var MotorControlButtons = (function (_Component) {
+		_inherits(MotorControlButtons, _Component);
+	
+		function MotorControlButtons() {
+			_classCallCheck(this, MotorControlButtons);
+	
+			_get(Object.getPrototypeOf(MotorControlButtons.prototype), 'constructor', this).apply(this, arguments);
+		}
+	
+		_createClass(MotorControlButtons, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.handler = this.handleKeyDown.bind(this);
+				document.addEventListener('keydown', this.handler);
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				document.removeEventListener('keydown', this.handler);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return false;
+			}
+		}, {
+			key: 'handleKeyDown',
+			value: function handleKeyDown(e) {
+				var _props = this.props;
+				var setMotor = _props.setMotor;
+				var decreaseMotor = _props.decreaseMotor;
+				var increaseMotor = _props.increaseMotor;
+	
+				if (e.which >= ZERO && e.which <= EIGHT) {
+					setMotor((e.which - ZERO) / 8);
+				} else if (e.which >= NUMZERO && e.which <= NUMEIGHT) {
+					setMotor((e.which - NUMZERO) / 8);
+				} else if (e.which === MINUS || e.which === NUMMINUS) {
+					decreaseMotor();
+				} else if (e.which === PLUS || e.which === NUMPLUS) {
+					increaseMotor();
+				} else if (e.which === SPACE) {
+					setMotor(0);
+				} else return;
+	
+				e.preventDefault();
+			}
+		}], [{
+			key: 'propTypes',
+			value: {
+				setMotor: _react.PropTypes.func.isRequired,
+				decreaseMotor: _react.PropTypes.func.isRequired,
+				increaseMotor: _react.PropTypes.func.isRequired
+			},
+			enumerable: true
+		}]);
+	
+		return MotorControlButtons;
+	})(_react.Component);
+	
+	exports['default'] = MotorControlButtons;
+	module.exports = exports['default'];
+
+/***/ },
+/* 562 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -54735,7 +54858,7 @@
 	
 	var motorActions = _interopRequireWildcard(_actionsMotorActions);
 	
-	var _actionsRecordingActions = __webpack_require__(562);
+	var _actionsRecordingActions = __webpack_require__(563);
 	
 	var recordingActions = _interopRequireWildcard(_actionsRecordingActions);
 	
@@ -54747,19 +54870,23 @@
 	
 	var _componentsMotorControlButtons2 = _interopRequireDefault(_componentsMotorControlButtons);
 	
-	var _componentsRecordingRecordStopPlayButtons = __webpack_require__(565);
+	var _componentsMotorHotkeys = __webpack_require__(561);
+	
+	var _componentsMotorHotkeys2 = _interopRequireDefault(_componentsMotorHotkeys);
+	
+	var _componentsRecordingRecordStopPlayButtons = __webpack_require__(566);
 	
 	var _componentsRecordingRecordStopPlayButtons2 = _interopRequireDefault(_componentsRecordingRecordStopPlayButtons);
 	
-	var _componentsRecordingLog = __webpack_require__(569);
+	var _componentsRecordingLog = __webpack_require__(570);
 	
 	var _componentsRecordingLog2 = _interopRequireDefault(_componentsRecordingLog);
 	
-	var _componentsScriptedControl = __webpack_require__(572);
+	var _componentsScriptedControl = __webpack_require__(573);
 	
 	var _componentsScriptedControl2 = _interopRequireDefault(_componentsScriptedControl);
 	
-	var _componentsRecordingLoadSaveButtons = __webpack_require__(573);
+	var _componentsRecordingLoadSaveButtons = __webpack_require__(574);
 	
 	var _componentsRecordingLoadSaveButtons2 = _interopRequireDefault(_componentsRecordingLoadSaveButtons);
 	
@@ -54805,6 +54932,10 @@
 						setMotor: motorActions.setMotor,
 						increaseMotor: motorActions.increaseMotor,
 						decreaseMotor: motorActions.decreaseMotor }),
+					_react2['default'].createElement(_componentsMotorHotkeys2['default'], {
+						setMotor: motorActions.setMotor,
+						decreaseMotor: motorActions.decreaseMotor,
+						increaseMotor: motorActions.increaseMotor }),
 					_react2['default'].createElement('hr', null),
 					_react2['default'].createElement(_componentsRecordingRecordStopPlayButtons2['default'], {
 						startRecording: recordingActions.startRecording,
@@ -54833,7 +54964,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 562 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54849,7 +54980,7 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
-	var _filesaverJs = __webpack_require__(563);
+	var _filesaverJs = __webpack_require__(564);
 	
 	var _constantsActionTypes = __webpack_require__(268);
 	
@@ -54882,7 +55013,7 @@
 	}
 
 /***/ },
-/* 563 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* FileSaver.js
@@ -55136,7 +55267,7 @@
 	
 	if (typeof module !== "undefined" && module.exports) {
 	  module.exports.saveAs = saveAs;
-	} else if (("function" !== "undefined" && __webpack_require__(564) !== null) && (__webpack_require__(493) != null)) {
+	} else if (("function" !== "undefined" && __webpack_require__(565) !== null) && (__webpack_require__(493) != null)) {
 	  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
 	    return saveAs;
 	  }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -55144,14 +55275,14 @@
 
 
 /***/ },
-/* 564 */
+/* 565 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 565 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55176,15 +55307,15 @@
 	
 	var _reactBootstrap = __webpack_require__(276);
 	
-	var _recordingButtonsRecordingRecordButton = __webpack_require__(566);
+	var _recordingButtonsRecordingRecordButton = __webpack_require__(567);
 	
 	var _recordingButtonsRecordingRecordButton2 = _interopRequireDefault(_recordingButtonsRecordingRecordButton);
 	
-	var _recordingButtonsRecordingStopButton = __webpack_require__(567);
+	var _recordingButtonsRecordingStopButton = __webpack_require__(568);
 	
 	var _recordingButtonsRecordingStopButton2 = _interopRequireDefault(_recordingButtonsRecordingStopButton);
 	
-	var _recordingButtonsRecordingPlayButton = __webpack_require__(568);
+	var _recordingButtonsRecordingPlayButton = __webpack_require__(569);
 	
 	var _recordingButtonsRecordingPlayButton2 = _interopRequireDefault(_recordingButtonsRecordingPlayButton);
 	
@@ -55244,7 +55375,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 566 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55318,7 +55449,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 567 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55379,7 +55510,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 568 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55447,7 +55578,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 569 */
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55476,7 +55607,7 @@
 	
 	var _modelsRecording2 = _interopRequireDefault(_modelsRecording);
 	
-	__webpack_require__(570);
+	__webpack_require__(571);
 	
 	var RecordingLog = (function (_Component) {
 		_inherits(RecordingLog, _Component);
@@ -55519,13 +55650,13 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 570 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(571);
+	var content = __webpack_require__(572);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(546)(content, {});
@@ -55545,7 +55676,7 @@
 	}
 
 /***/ },
-/* 571 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(545)();
@@ -55559,7 +55690,7 @@
 
 
 /***/ },
-/* 572 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55659,7 +55790,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 573 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55684,11 +55815,11 @@
 	
 	var _reactBootstrap = __webpack_require__(276);
 	
-	var _recordingButtonsRecordingLoadButton = __webpack_require__(574);
+	var _recordingButtonsRecordingLoadButton = __webpack_require__(575);
 	
 	var _recordingButtonsRecordingLoadButton2 = _interopRequireDefault(_recordingButtonsRecordingLoadButton);
 	
-	var _recordingButtonsRecordingSaveButton = __webpack_require__(575);
+	var _recordingButtonsRecordingSaveButton = __webpack_require__(576);
 	
 	var _recordingButtonsRecordingSaveButton2 = _interopRequireDefault(_recordingButtonsRecordingSaveButton);
 	
@@ -55739,7 +55870,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 574 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55812,7 +55943,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 575 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55873,7 +56004,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 576 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55906,11 +56037,11 @@
 	
 	var motorActions = _interopRequireWildcard(_actionsMotorActions);
 	
-	var _actionsParametricScriptActions = __webpack_require__(577);
+	var _actionsParametricScriptActions = __webpack_require__(578);
 	
 	var parametricScriptActions = _interopRequireWildcard(_actionsParametricScriptActions);
 	
-	var _actionsRecordingActions = __webpack_require__(562);
+	var _actionsRecordingActions = __webpack_require__(563);
 	
 	var recordingActions = _interopRequireWildcard(_actionsRecordingActions);
 	
@@ -55918,19 +56049,19 @@
 	
 	var _componentsMotorBar2 = _interopRequireDefault(_componentsMotorBar);
 	
-	var _componentsRecordingStopPlayButtons = __webpack_require__(578);
+	var _componentsRecordingStopPlayButtons = __webpack_require__(579);
 	
 	var _componentsRecordingStopPlayButtons2 = _interopRequireDefault(_componentsRecordingStopPlayButtons);
 	
-	var _componentsParametricScriptEditor = __webpack_require__(579);
+	var _componentsParametricScriptEditor = __webpack_require__(580);
 	
 	var _componentsParametricScriptEditor2 = _interopRequireDefault(_componentsParametricScriptEditor);
 	
-	var _componentsParametricScriptPresets = __webpack_require__(580);
+	var _componentsParametricScriptPresets = __webpack_require__(581);
 	
 	var _componentsParametricScriptPresets2 = _interopRequireDefault(_componentsParametricScriptPresets);
 	
-	var _componentsScriptedControl = __webpack_require__(572);
+	var _componentsScriptedControl = __webpack_require__(573);
 	
 	var _componentsScriptedControl2 = _interopRequireDefault(_componentsScriptedControl);
 	
@@ -56002,7 +56133,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 577 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56023,7 +56154,7 @@
 	}
 
 /***/ },
-/* 578 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56048,11 +56179,11 @@
 	
 	var _reactBootstrap = __webpack_require__(276);
 	
-	var _recordingButtonsRecordingStopButton = __webpack_require__(567);
+	var _recordingButtonsRecordingStopButton = __webpack_require__(568);
 	
 	var _recordingButtonsRecordingStopButton2 = _interopRequireDefault(_recordingButtonsRecordingStopButton);
 	
-	var _recordingButtonsRecordingPlayButton = __webpack_require__(568);
+	var _recordingButtonsRecordingPlayButton = __webpack_require__(569);
 	
 	var _recordingButtonsRecordingPlayButton2 = _interopRequireDefault(_recordingButtonsRecordingPlayButton);
 	
@@ -56105,7 +56236,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 579 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56191,7 +56322,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 580 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56298,7 +56429,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 581 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56325,7 +56456,7 @@
 	
 	var _reactRedux = __webpack_require__(199);
 	
-	var _componentsConnectionLog = __webpack_require__(582);
+	var _componentsConnectionLog = __webpack_require__(583);
 	
 	var _componentsConnectionLog2 = _interopRequireDefault(_componentsConnectionLog);
 	
@@ -56375,7 +56506,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 582 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56400,9 +56531,9 @@
 	
 	var _reactBootstrap = __webpack_require__(276);
 	
-	var _util = __webpack_require__(583);
+	var _util = __webpack_require__(584);
 	
-	__webpack_require__(586);
+	__webpack_require__(587);
 	
 	var ConnectionLog = (function (_Component) {
 		_inherits(ConnectionLog, _Component);
@@ -56445,7 +56576,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 583 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -56973,7 +57104,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 	
-	exports.isBuffer = __webpack_require__(584);
+	exports.isBuffer = __webpack_require__(585);
 	
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -57017,7 +57148,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(585);
+	exports.inherits = __webpack_require__(586);
 	
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -57038,7 +57169,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(3)))
 
 /***/ },
-/* 584 */
+/* 585 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -57049,7 +57180,7 @@
 	}
 
 /***/ },
-/* 585 */
+/* 586 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -57078,13 +57209,13 @@
 
 
 /***/ },
-/* 586 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(587);
+	var content = __webpack_require__(588);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(546)(content, {});
@@ -57104,7 +57235,7 @@
 	}
 
 /***/ },
-/* 587 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(545)();
@@ -57118,13 +57249,13 @@
 
 
 /***/ },
-/* 588 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(589);
+	var content = __webpack_require__(590);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(546)(content, {});
@@ -57144,7 +57275,7 @@
 	}
 
 /***/ },
-/* 589 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(545)();
