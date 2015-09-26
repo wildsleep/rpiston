@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as motorActions from '../actions/motorActions';
 import MotorBar from '../components/MotorBar';
 import MotorControlButtons from '../components/MotorControlButtons';
+import MotorHotkeys from '../components/MotorHotkeys';
 
 function mapStateToProps(state) {
 	return { motorValue: state.motor };
@@ -31,6 +32,10 @@ export default class ControlPage extends Component {
 			<div>
 				<MotorBar motorValue={motorValue} />
 				<MotorControlButtons
+					setMotor={motorActions.setMotor}
+					decreaseMotor={motorActions.decreaseMotor}
+					increaseMotor={motorActions.increaseMotor} />
+				<MotorHotkeys
 					setMotor={motorActions.setMotor}
 					decreaseMotor={motorActions.decreaseMotor}
 					increaseMotor={motorActions.increaseMotor} />

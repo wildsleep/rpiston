@@ -7,6 +7,7 @@ import * as motorActions from '../actions/motorActions';
 import * as recordingActions from '../actions/recordingActions';
 import MotorBar from '../components/MotorBar';
 import MotorControlButtons from '../components/MotorControlButtons';
+import MotorHotkeys from '../components/MotorHotkeys';
 import RecordingRecordStopPlayButtons from '../components/RecordingRecordStopPlayButtons';
 import RecordingLog from '../components/RecordingLog';
 import ScriptedControl from '../components/ScriptedControl';
@@ -38,6 +39,10 @@ export default class RecordPage extends Component {
 					setMotor={motorActions.setMotor}
 					increaseMotor={motorActions.increaseMotor}
 					decreaseMotor={motorActions.decreaseMotor} />
+				<MotorHotkeys
+					setMotor={motorActions.setMotor}
+					decreaseMotor={motorActions.decreaseMotor}
+					increaseMotor={motorActions.increaseMotor} />
 				<hr />
 				<RecordingRecordStopPlayButtons
 					startRecording={recordingActions.startRecording}
