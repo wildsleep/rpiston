@@ -93,4 +93,3 @@ sudo i2cdetect -y 1
 # License
 
 [The MIT License](http://opensource.org/licenses/MIT)
-
