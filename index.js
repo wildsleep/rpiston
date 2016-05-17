@@ -1,3 +1,6 @@
+var tessel = require('./tessel');
+tessel.redLed('on');
+
 var auth = require('http-auth');
 var fs = require('fs');
 var http = require('http');
@@ -9,12 +12,11 @@ var motorConfig = {
 	minDeadZone: 0.075
 };
 
-var basic = auth.basic({
+var basicAuth = auth.basic({
 	file: path.join(__dirname, 'htpasswd')
 });
-
 router
-	.use(auth.connect(basic))
+	.use(auth.connect(basicAuth))
 	.use('static', { path: path.join(__dirname, 'public') })
 	.get('/*', function (req, res) {
 		fs.readFile('public/index.html', function (err, file) {
@@ -28,6 +30,7 @@ server.on('listening', function () {
 	var host = server.address().address;
 	var port = server.address().port;
 	console.log('rPiston server listening at http://%s:%s', host, port);
+	tessel.redLed('off');
 });
 
 var io = require('socket.io')(server, {
@@ -41,6 +44,7 @@ var motorValue = 0;
 setMotor(0);
 
 io.on('connection', function (socket) {
+	tessel.greenLed('on');
 	++connections;
 	console.log('Connection established (total: %s)', connections);
 	socket.on('disconnect', disconnect);
@@ -54,6 +58,7 @@ function disconnect() {
 	if (connections === 0) {
 		console.log('No remaining connections, killing motor');
 		setMotor(0);
+		tessel.greenLed('off');
 	}
 }
 
@@ -62,17 +67,8 @@ function setMotor(value) {
 		motorConfig.minDeadZone + (value * (1 - motorConfig.minDeadZone));
 
 	console.log('Set motor to %s (adjusted: %s)', value, adjustedValue);
-	analogWrite(adjustedValue);
+	tessel.analogWrite(adjustedValue);
+	tessel.blueLed('toggle');
 	motorValue = value;
 	io.sockets.emit('motor', value);
-}
-
-function analogWrite(value) {
-	try {
-		var tessel = require('tessel');
-		tessel.port.B.pin[7].analogWrite(value);
-		tessel.led[2].toggle();
-	} catch (e) {
-		console.log('Wrote to Tessel pin B7, value ' + value);
-	}
 }
