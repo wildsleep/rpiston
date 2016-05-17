@@ -1,6 +1,0 @@
-#!/bin/sh
-RPISTON_DIR=$(dirname $0)
-RPISTON_DIR=$(readlink -f $RPISTON_DIR)
-cd $RPISTON_DIR
-npm start
-

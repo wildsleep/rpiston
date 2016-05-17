@@ -27,8 +27,7 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ParametricControlPage extends Component {
+class ParametricControlPage extends Component {
 	render() {
 		const { motorValue, playbackState, parametricScript, motorActions, parametricScriptActions, recordingActions } = this.props;
 		return (
@@ -53,3 +52,5 @@ export default class ParametricControlPage extends Component {
 		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ParametricControlPage);

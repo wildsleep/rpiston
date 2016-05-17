@@ -14,8 +14,7 @@ function mapDispatchToProps(dispatch) {
 	return { motorActions: bindActionCreators({}, dispatch) };
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ConnectionLogPage extends Component {
+class ConnectionLogPage extends Component {
 	render() {
 		const { log } = this.props;
 		return (
@@ -26,3 +25,5 @@ export default class ConnectionLogPage extends Component {
 		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectionLogPage);

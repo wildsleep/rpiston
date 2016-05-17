@@ -28,8 +28,7 @@ function mapDispatchToProps(dispatch) {
 	};
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class RecordPage extends Component {
+class RecordPage extends Component {
 	render() {
 		const { motorValue, playbackState, recording, motorActions, recordingActions } = this.props;
 		return (
@@ -51,7 +50,7 @@ export default class RecordPage extends Component {
 					playbackState={playbackState} />
 				<RecordingLog recording={recording} />
 				<RecordingLoadSaveButtons
-					loadRecording={recordingActions.loadRecording} 
+					loadRecording={recordingActions.loadRecording}
 					saveRecording={recordingActions.saveRecording} />
 				<ScriptedControl
 					playbackState={playbackState}
@@ -62,3 +61,5 @@ export default class RecordPage extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(RecordPage);

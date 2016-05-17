@@ -1,0 +1,11 @@
+htpasswd
+public
+
+# Fixes for bundling socket.io
+node_modules/engine.io/node_modules/negotiator/lib
+node_modules/socket.io-client/socket.io.js
+
+# Fixes for bundling http-auth
+node_modules/http-proxy/lib/http-proxy
+node_modules/eventemitter3
+node_modules/requires-port

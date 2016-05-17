@@ -3,7 +3,7 @@ export default class ParametricScript {
 		this.text = text;
 		this.fn = parse(text);
 		this.isValid = !!this.fn;
-		this.interval = interval || 100;
+		this.interval = interval || 400;
 	}
 
 	nextEventAfter(time) {

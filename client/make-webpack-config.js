@@ -1,9 +1,10 @@
 var path = require('path');
+var autoprefixer = require('autoprefixer');
 
 module.exports = function (options) {
-	var entry = './src/app.jsx';
+	var entry = './client/src/app.jsx';
 	var output = {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '../public'),
 		publicPath: options.devServer ?
 			'http://localhost:' + options.devServerPort + '/' :
 			'/',
@@ -11,15 +12,15 @@ module.exports = function (options) {
 	};
 	var loaders = [
 		{
-			test: /\.jsx?/,
+			test: /\.jsx?$/,
 			include: path.join(__dirname, 'src'),
-			loader: 'babel-loader?stage=0'
+			loader: 'babel-loader'
 		}, {
-			test: /\.less/,
+			test: /\.less$/,
 			loaders: [
 				'style-loader',
 				'css-loader',
-				'autoprefixer-loader?browsers=last 2 version',
+				'postcss-loader',
 				'less-loader'
 			]
 		}
@@ -36,6 +37,9 @@ module.exports = function (options) {
 		},
 		resolve: {
 			extensions: extensions
+		},
+		postcss: function () {
+			return [autoprefixer];
 		}
 	};
 };

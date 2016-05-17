@@ -15,8 +15,7 @@ function mapDispatchToProps(dispatch) {
 	return { motorActions: bindActionCreators(motorActions, dispatch) };
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ControlPage extends Component {
+class ControlPage extends Component {
 	static propTypes = {
 		motorValue: PropTypes.number.isRequired,
 		motorActions: PropTypes.shape({
@@ -43,3 +42,5 @@ export default class ControlPage extends Component {
 		)
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlPage);

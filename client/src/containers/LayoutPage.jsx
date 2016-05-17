@@ -16,8 +16,7 @@ function mapDispatchToProps(dispatch) {
 	return { actions: bindActionCreators({ connectionStatusChange, motorUpdated }, dispatch) };
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class LayoutPage extends Component {
+class LayoutPage extends Component {
 	static propTypes = {
 		connection: PropTypes.shape({
 			status: PropTypes.string.isRequired,
@@ -44,3 +43,5 @@ export default class LayoutPage extends Component {
 		);
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutPage);
