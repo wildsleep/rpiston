@@ -11,7 +11,7 @@ try {
 
 	module.exports = {
 		analogWrite: function (value) {
-			tessel.port.B.pin[7].analogWrite(value);
+			tessel.port.B.pin[7].analogWrite(3.3*value);
 		},
 		redLed: function (value) {
 			led(0, value);
