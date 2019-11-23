@@ -1,27 +1,24 @@
-import React, { Component, PropTypes } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStop, faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import RecordingStopButton from './recordingButtons/RecordingStopButton';
-import RecordingPlayButton from './recordingButtons/RecordingPlayButton';
-
-export default class RecordingStopPlayButtons extends Component {
-	static propTypes = {
-		stopRecording: PropTypes.func.isRequired,
-		playRecording: PropTypes.func.isRequired,
-		playbackState: PropTypes.string.isRequired
-	}
-
-	render() {
-		const { stopRecording, playRecording, playbackState } = this.props;
-		return (
-			<Row>
-				<Col xs={6}>
-					<RecordingStopButton stopRecording={stopRecording} />
-				</Col>
-				<Col xs={6}>
-					<RecordingPlayButton playRecording={playRecording} playbackState={playbackState} />
-				</Col>
-			</Row>
-		);
-	}
+export default function RecordingStopPlayButtons(props) {
+	const { stopRecording, playRecording, playbackState } = props;
+	return (
+		<div className="flex -mx-4 mb-4">
+			<button className="button button-blue flex-1 mx-4" onClick={stopRecording}>
+				<FontAwesomeIcon icon={faStop} fixedWidth /> Stop
+			</button>
+			<button className="button button-green flex-1 mx-4" onClick={playRecording} disabled={playbackState !== 'stopped'}>
+				<FontAwesomeIcon icon={faPlay} fixedWidth /> Play
+			</button>
+		</div>
+	);
 }
+
+RecordingStopPlayButtons.propTypes = {
+	stopRecording: PropTypes.func.isRequired,
+	playRecording: PropTypes.func.isRequired,
+	playbackState: PropTypes.string.isRequired
+};

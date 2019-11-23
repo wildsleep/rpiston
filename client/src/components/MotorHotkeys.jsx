@@ -1,10 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { Row, Col, ButtonGroup } from 'react-bootstrap';
-
-import NumberButton from './motorControlButtons/NumberButton';
-import DecreaseButton from './motorControlButtons/DecreaseButton';
-import IncreaseButton from './motorControlButtons/IncreaseButton';
-import OffButton from './motorControlButtons/OffButton';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const ZERO = 48;
 const EIGHT = ZERO + 8;
@@ -16,29 +11,8 @@ const NUMPLUS = 107;
 const NUMMINUS = 109;
 const SPACE = 32;
 
-export default class MotorControlButtons extends Component {
-	static propTypes = {
-		setMotor: PropTypes.func.isRequired,
-		decreaseMotor: PropTypes.func.isRequired,
-		increaseMotor: PropTypes.func.isRequired
-	}
-
-	componentDidMount() {
-		this.handler = this.handleKeyDown.bind(this);
-		document.addEventListener('keydown', this.handler);
-	}
-
-	componentWillUnmount() {
-		document.removeEventListener('keydown', this.handler);
-	}
-
-	render() {
-		return false;
-	}
-
-	handleKeyDown(e) {
-		const { setMotor, decreaseMotor, increaseMotor } = this.props;
-
+export default function MotorControlButtons({ setMotor, decreaseMotor, increaseMotor }) {
+	function handleKeyDown(e) {
 		if (e.which >= ZERO && e.which <= EIGHT) {
 			setMotor((e.which - ZERO) / 8);
 		} else if (e.which >= NUMZERO && e.which <= NUMEIGHT) {
@@ -53,4 +27,20 @@ export default class MotorControlButtons extends Component {
 
 		e.preventDefault();
 	}
+
+	React.useEffect(() => {
+		document.addEventListener('keydown', handleKeyDown);
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, []);
+
+	return false;
+
+}
+
+MotorControlButtons.propTypes = {
+	setMotor: PropTypes.func.isRequired,
+	decreaseMotor: PropTypes.func.isRequired,
+	increaseMotor: PropTypes.func.isRequired
 }

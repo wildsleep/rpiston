@@ -1,4 +1,4 @@
-import merge from 'lodash/object/merge';
+import merge from 'lodash/merge';
 
 import * as ActionTypes from '../constants/ActionTypes';
 import Recording from '../models/Recording';

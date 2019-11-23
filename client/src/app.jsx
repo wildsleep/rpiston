@@ -1,32 +1,31 @@
-import * as React from 'react';
-import { Router, Route, IndexRoute } from 'react-router';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import configureStore from './store/configureStore';
-import LayoutPage from './containers/LayoutPage';
-import ControlPage from './containers/ControlPage';
-import RecordPage from './containers/RecordPage';
-import ParametricControlPage from './containers/ParametricControlPage';
 import ConnectionLogPage from './containers/ConnectionLogPage';
+import ControlPage from './containers/ControlPage';
+import LayoutPage from './containers/LayoutPage';
+import ParametricControlPage from './containers/ParametricControlPage';
+import RecordPage from './containers/RecordPage';
 
-require('./main.less');
+require('./main.css');
 
-const history = createBrowserHistory();
 const store = configureStore();
 
-React.render(
+ReactDOM.render(
 	<Provider store={store}>
-		{() =>
-			<Router history={history}>
-				<Route path='/' component={LayoutPage}>
-					<IndexRoute component={ControlPage} />
-					<Route path='/record' component={RecordPage} />
-					<Route path='/parametric' component={ParametricControlPage} />
+		<Router>
+			<LayoutPage>
+				<Switch>
 					<Route path='/connectionLog' component={ConnectionLogPage} />
-				</Route>
-			</Router>
-		}
+					<Route path='/parametric' component={ParametricControlPage} />
+					<Route path='/record' component={RecordPage} />
+					<Route path='/' component={ControlPage} />
+				</Switch>
+			</LayoutPage>
+		</Router>
 	</Provider>,
 	document.getElementById('app')
 );

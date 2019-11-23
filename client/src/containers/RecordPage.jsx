@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid } from 'react-bootstrap';
 
 import * as motorActions from '../actions/motorActions';
 import * as recordingActions from '../actions/recordingActions';
@@ -32,7 +32,7 @@ class RecordPage extends Component {
 	render() {
 		const { motorValue, playbackState, recording, motorActions, recordingActions } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<MotorBar motorValue={motorValue} />
 				<MotorControlButtons
 					setMotor={motorActions.setMotor}
@@ -42,7 +42,7 @@ class RecordPage extends Component {
 					setMotor={motorActions.setMotor}
 					decreaseMotor={motorActions.decreaseMotor}
 					increaseMotor={motorActions.increaseMotor} />
-				<hr />
+				<hr className="mb-4 text-gray-300" />
 				<RecordingRecordStopPlayButtons
 					startRecording={recordingActions.startRecording}
 					stopRecording={recordingActions.stopRecording}
@@ -57,7 +57,7 @@ class RecordPage extends Component {
 					script={recording}
 					setMotor={motorActions.setMotor}
 					stopRecording={recordingActions.stopRecording} />
-			</div>
+			</React.Fragment>
 		);
 	}
 }

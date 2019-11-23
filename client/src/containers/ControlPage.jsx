@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -28,7 +29,7 @@ class ControlPage extends Component {
 	render() {
 		const { motorValue, motorActions } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<MotorBar motorValue={motorValue} />
 				<MotorControlButtons
 					setMotor={motorActions.setMotor}
@@ -38,7 +39,7 @@ class ControlPage extends Component {
 					setMotor={motorActions.setMotor}
 					decreaseMotor={motorActions.decreaseMotor}
 					increaseMotor={motorActions.increaseMotor} />
-			</div>
+			</React.Fragment>
 		)
 	}
 }

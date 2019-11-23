@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -31,9 +32,9 @@ class ParametricControlPage extends Component {
 	render() {
 		const { motorValue, playbackState, parametricScript, motorActions, parametricScriptActions, recordingActions } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<MotorBar motorValue={motorValue} />
-				<hr />
+				<hr className="mb-4 text-gray-300" />
 				<RecordingStopPlayButtons
 					stopRecording={recordingActions.stopRecording}
 					playRecording={recordingActions.playRecording}
@@ -48,7 +49,7 @@ class ParametricControlPage extends Component {
 					script={parametricScript}
 					stopRecording={recordingActions.stopRecording}
 					setMotor={motorActions.setMotor} />
-			</div>
+			</React.Fragment>
 		)
 	}
 }

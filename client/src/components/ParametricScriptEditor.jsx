@@ -1,38 +1,22 @@
-import React, { Component, PropTypes } from 'react';
-import { Row, Col, Input } from 'react-bootstrap';
+import React from 'react';
+import cx from 'classnames';
+import PropTypes from 'prop-types';
 
 import ParametricScript from '../models/ParametricScript';
 
-export default class ParametricScriptEditor extends Component {
-	static propTypes = {
-		script: PropTypes.instanceOf(ParametricScript).isRequired,
-		updateParametricScript: PropTypes.func.isRequired
-	}
-
-	validationState() {
-		return this.props.script.isValid ? null : 'error';
-	}
-
-	handleChange(e) {
-		const newScript = e.target.value;
-		this.props.updateParametricScript(newScript);
-	}
-
-	render() {
-		const scriptText = this.props.script.toText();
-		const handleChange = this.handleChange.bind(this);
-		const bsStyle = this.validationState();
-		return (
-			<Row>
-				<Col xs={12}>
-					<Input type='textarea'
-						standalone
-						value={scriptText}
-						placeholder='abs(sin(t/1000))'
-						bsStyle={bsStyle}
-						onChange={handleChange} />
-				</Col>
-			</Row>
-		);
-	}
+export default function ParametricScriptEditor({ script, updateParametricScript }) {
+	const scriptText = script.toText();
+	const className = script.isValid ? null : 'border-red-500';
+	return (
+		<textarea
+			className={cx('w-full h-16 mb-4 px-4 py-2 rounded border shadow-inner', script.isValid ? 'border-gray-400' : 'border-red')}
+			value={scriptText}
+			placeholder='abs(sin(t/1000))'
+			onChange={e => updateParametricScript(e.target.value)} />
+	);
 }
+
+ParametricScriptEditor.propTypes = {
+	script: PropTypes.instanceOf(ParametricScript).isRequired,
+	updateParametricScript: PropTypes.func.isRequired
+};

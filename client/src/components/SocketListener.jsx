@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import socket from '../socket';
 
@@ -12,41 +13,37 @@ const connectionStatusEvents = [
 	'reconnect_failed'
 ];
 
-export default class SocketListener extends React.Component {
-	static propTypes = {
-		connectionStatusChange: PropTypes.func,
-		motorUpdated: PropTypes.func
-	}
+export default function SocketListener({ connectionStatusChange, motorUpdated }) {
+	React.useEffect(() => {
+		const listeners = [];
 
-	constructor(props) {
-		super(props);
-		this.listeners = [];
-	}
-
-	addListener(event, fn) {
-		this.listeners.push(fn);
-		socket.on(event, fn);
-	}
-
-	removeAllListeners() {
-		let fn;
-		while (fn = this.listeners.pop()) {
-			socket.removeListener(fn);
+		function addListener(event, fn) {
+			listeners.push(fn);
+			socket.on(event, fn);
 		}
-	}
 
-	componentDidMount() {
-		this.addListener('motor', (value) => this.props.motorUpdated(value));
+		function removeAllListeners() {
+			let fn;
+			while (fn = listeners.pop()) {
+				socket.removeListener(fn);
+			}
+		}
+
+		addListener('motor', value => motorUpdated(value));
+
 		connectionStatusEvents.forEach((event) => {
-			this.addListener(event, () => this.props.connectionStatusChange(event));
+			addListener(event, () => connectionStatusChange(event));
 		});
-	}
 
-	render() {
-		return false;
-	}
+		return () => {
+			removeAllListeners();
+		}
+	}, [connectionStatusChange, motorUpdated]);
 
-	componentWillUnmount() {
-		this.removeAllListeners();
-	}
+	return false;
 }
+
+SocketListener.propTypes = {
+	connectionStatusChange: PropTypes.func,
+	motorUpdated: PropTypes.func
+};

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -18,10 +19,10 @@ class ConnectionLogPage extends Component {
 	render() {
 		const { log } = this.props;
 		return (
-			<div>
-				<h1>Connection event log</h1>
+			<React.Fragment>
+				<h1 className="text-xl mb-4">Connection event log</h1>
 				<ConnectionLog log={log} />
-			</div>
+			</React.Fragment>
 		)
 	}
 }

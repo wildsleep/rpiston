@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Grid } from 'react-bootstrap';
 
 import { connectionStatusChange } from '../actions/connectionActions';
 import { motorUpdated } from '../actions/motorActions';
@@ -31,15 +31,15 @@ class LayoutPage extends Component {
 	render() {
 		const { connection, actions, children } = this.props;
 		return (
-			<div>
+			<React.Fragment>
 				<Navbar connectionStatus={connection.status} connectionOk={connection.ok} />
-				<Grid>
+				<div className="container mx-auto">
 					{children}
-				</Grid>
+				</div>
 				<SocketListener
 					connectionStatusChange={actions.connectionStatusChange}
 					motorUpdated={actions.motorUpdated}/>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

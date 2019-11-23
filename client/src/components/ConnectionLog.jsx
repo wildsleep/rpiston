@@ -1,23 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { inspect } from 'util';
 
-require('./ConnectionLog.less');
+export default function ConnectionLog({ log }) {
+	return (
+		<pre className="log">
+			{log.map(inspect).join('\n')}
+		</pre>
+	);
+}
 
-export default class ConnectionLog extends Component {
-	static propTypes = {
-		log: PropTypes.array.isRequired
-	}
-
-	render() {
-		return (
-			<Row>
-				<Col xs={12}>
-					<pre className='connection-log'>
-						{this.props.log.map(inspect).join('\n')}
-					</pre>
-				</Col>
-			</Row>
-		);
-	}
+ConnectionLog.propTypes = {
+	log: PropTypes.array.isRequired
 }

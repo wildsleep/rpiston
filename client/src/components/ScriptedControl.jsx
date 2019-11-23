@@ -1,56 +1,49 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class ScriptedControl extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			lastTime: -1,
-			nextTimeout: null
-		};
-	}
+export default function ScriptedControl({ script, playbackState, stopRecording, setMotor }) {
+	const ref = React.useRef({ lastTime: -1, timeout: null, playing: false });
 
-	static propTypes = {
-		script: PropTypes.shape({
-			nextEventAfter: PropTypes.func.isRequired
-		}).isRequired,
-		playbackState: PropTypes.string.isRequired,
-		stopRecording: PropTypes.func.isRequired,
-		setMotor: PropTypes.func.isRequired
-	}
-
-	componentWillReceiveProps(props) {
-		if (props.playbackState === 'playing' && this.props.playbackState !== 'playing') {
-			this.setState({ lastTime: -1 });
-			this.queueEvent();
+	React.useEffect(() => {
+		if (playbackState === 'playing' && !ref.current.playing) {
+			ref.current.playing = true;
+			ref.current.lastTime = -1;
+			queueEvent();
 		}
-		else if (props.playbackState !== 'playing') {
-			clearTimeout(this.state.nextTimeout);
-			this.setState({ lastTime: -1, nextTimeout: null });
+		if (playbackState !== 'playing') {
+			ref.current.playing = false;
+			clearTimeout(ref.current.timeout);
+		}
+
+		return () => {
+			clearTimeout(ref.current.timeout);
+		}
+	}, [playbackState]);
+
+	return false;
+
+	function queueEvent() {
+		const event = script.nextEventAfter(ref.current.lastTime);
+		if (event) {
+			const timeUntilEvent = event.time - ref.current.lastTime;
+			ref.current.timeout = setTimeout(() => triggerEvent(event), timeUntilEvent);
+		} else {
+			stopRecording();
 		}
 	}
 
-	componentWillUnmount() {
-		clearTimeout(this.state.nextTimeout);
-	}
-
-	queueEvent() {
-		var event = this.props.script.nextEventAfter(this.state.lastTime);
-		if (!event) {
-			this.props.stopRecording();
-			return;
-		}
-		var timeUntilEvent = event.time - this.state.lastTime;
-		var timeout = setTimeout(() => this.triggerEvent(event), timeUntilEvent);
-		this.setState({ nextTimeout: timeout });
-	}
-
-	triggerEvent(event) {
-		this.props.setMotor(event.value);
-		this.setState({ lastTime: event.time });
-		this.queueEvent()
-	}
-
-	render() {
-		return false;
+	function triggerEvent(event) {
+		setMotor(event.value);
+		ref.current.lastTime = event.time;
+		queueEvent();
 	}
 }
+
+ScriptedControl.propTypes = {
+	script: PropTypes.shape({
+		nextEventAfter: PropTypes.func.isRequired
+	}).isRequired,
+	playbackState: PropTypes.string.isRequired,
+	stopRecording: PropTypes.func.isRequired,
+	setMotor: PropTypes.func.isRequired
+};

@@ -1,49 +1,37 @@
-import React, { Component, PropTypes } from 'react';
-import { Row, Col, ButtonGroup } from 'react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import NumberButton from './motorControlButtons/NumberButton';
-import DecreaseButton from './motorControlButtons/DecreaseButton';
-import IncreaseButton from './motorControlButtons/IncreaseButton';
-import OffButton from './motorControlButtons/OffButton';
-
-export default class MotorControlButtons extends Component {
-	static propTypes = {
-		setMotor: PropTypes.func.isRequired,
-		decreaseMotor: PropTypes.func.isRequired,
-		increaseMotor: PropTypes.func.isRequired
-	}
-
-	render() {
-		const { setMotor, decreaseMotor, increaseMotor } = this.props;
-		return (
-			<div>
-				<Row>
-					<Col xs={12}>
-						<ButtonGroup justified>
-							{[1,2,3,4,5,6,7,8].map((n) => {
-								return (
-									<ButtonGroup key={n}>
-										<NumberButton value={n} maxValue={8} setMotor={setMotor} />
-									</ButtonGroup>
-								);
-							})}
-						</ButtonGroup>
-					</Col>
-				</Row>
-				<Row>
-					<Col xs={6}>
-						<DecreaseButton decreaseMotor={decreaseMotor} />
-					</Col>
-					<Col xs={6}>
-						<IncreaseButton increaseMotor={increaseMotor} />
-					</Col>
-				</Row>
-				<Row>
-					<Col xs={12}>
-						<OffButton setMotor={setMotor} />
-					</Col>
-				</Row>
-			</div>	
-		);
-	}
+export default function MotorControlButtons({ setMotor, decreaseMotor, increaseMotor }) {
+	return (
+		<React.Fragment>
+			<div className="flex mb-4">
+				{[1,2,3,4,5,6,7,8].map(n => (
+					<button key={n} className="button btn-grouped flex-1" onClick={() => setMotor(n / 8)}>
+						{n}
+					</button>
+				))}
+			</div>
+			<div className="flex -mx-4 mb-4">
+				<button className="button flex-1 mx-4" onClick={decreaseMotor}>
+					<FontAwesomeIcon icon={faChevronLeft} />
+				</button>
+				<button className="button flex-1 mx-4" onClick={increaseMotor}>
+					<FontAwesomeIcon icon={faChevronRight} />
+				</button>
+			</div>
+			<div className="flex -mx-4 mb-4">
+				<button className="button flex-1 mx-4" onClick={() => setMotor(0)}>
+					Off
+				</button>
+			</div>
+		</React.Fragment>
+	);
 }
+
+MotorControlButtons.propTypes = {
+	setMotor: PropTypes.func.isRequired,
+	decreaseMotor: PropTypes.func.isRequired,
+	increaseMotor: PropTypes.func.isRequired
+};
